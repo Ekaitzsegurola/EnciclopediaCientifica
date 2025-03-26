@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa de Derivadas - 1º Bachillerato</title>
+    <style>
+        /* Estilos generales */
+        :root {
+            --color-primario: #3498db;       /* Azul claro */
+            --color-secundario: #2980b9;    /* Azul más oscuro */
+            --color-acento: #e74c3c;        /* Rojo/Naranja para énfasis */
+            --color-verde: #2ecc71;         /* Verde para éxito/positividad */
+            --color-amarillo: #f1c40f;     /* Amarillo para notas */
+            --color-fondo: #f9f9f9;         /* Fondo general muy claro */
+            --color-texto: #333;           /* Texto principal oscuro */
+            --color-borde: #ddd;           /* Bordes suaves */
+            --sombra: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--color-texto);
+            background-color: var(--color-fondo);
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff; /* Fondo blanco para el contenido principal */
+            box-shadow: var(--sombra);
+            border-radius: 8px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Encabezados */
+        header {
+            background-color: var(--color-primario);
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin: -20px -20px 30px -20px; /* Ajusta para que cubra el padding del contenedor */
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: var(--color-secundario);
+            border-bottom: 2px solid var(--color-secundario);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: var(--color-primario); /* Usar primario para H3 */
+            margin-top: 30px;
+            font-size: 1.4em;
+        }
+         h4 {
+            color: var(--color-secundario); /* Usar secundario para H4 */
+            margin-top: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Elementos de contenido */
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .nota {
+            background-color: rgba(241, 196, 15, 0.1); /* Amarillo nota */
+            border-left: 4px solid var(--color-amarillo);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .ejemplo {
+            background-color: rgba(46, 204, 113, 0.1); /* Verde ejemplo */
+            border: 1px solid var(--color-verde);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+         .ejemplo code { /* Mejorar el estilo del código en ejemplos */
+             background-color: rgba(46, 204, 113, 0.2);
+             padding: 3px 6px;
+         }
+
+        .importante {
+            background-color: rgba(231, 76, 60, 0.1); /* Rojo importante */
+            border-left: 4px solid var(--color-acento);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+            font-weight: bold;
+        }
+
+        /* Listas */
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 30px; /* Más indentación */
+        }
+
+        li {
+            margin-bottom: 10px; /* Más espacio entre items */
+        }
+
+        /* Fórmulas y código matemático */
+         code {
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em;
+        }
+
+        .formula {
+            font-family: 'Cambria Math', Times, serif;
+            /* font-style: italic; */ /* No siempre es itálica */
+            font-size: 1.2em;
+            text-align: center;
+            margin: 25px auto;
+            padding: 15px;
+            background-color: #eaf2f8; /* Fondo azul muy claro para fórmulas */
+            border: 1px solid var(--color-primario);
+            border-radius: 5px;
+            display: block; /* Asegura que ocupe su propio espacio */
+            max-width: 80%; /* Limita el ancho para mejor lectura */
+            box-shadow: var(--sombra);
+        }
+         .formula strong { /* Resaltar nombres de reglas */
+             color: var(--color-secundario);
+         }
+
+        /* Gráficos */
+        .grafico {
+            background-color: white;
+            border: 1px solid var(--color-borde);
+            border-radius: 5px;
+            box-shadow: var(--sombra);
+            padding: 20px; /* Más padding */
+            margin: 30px auto; /* Más margen vertical */
+            text-align: center;
+            overflow-x: auto; /* Permitir scroll horizontal si el SVG es muy ancho */
+        }
+
+        .grafico svg { /* Asegurar que el SVG sea responsivo */
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            display: block; /* Evita espacio extra debajo */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .grafico-titulo {
+            font-weight: bold;
+            margin-bottom: 10px; /* Más espacio */
+            color: var(--color-secundario);
+            font-size: 1.1em;
+        }
+
+        .grafico-descripcion {
+            font-size: 0.95em; /* Ligeramente más grande */
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: var(--color-secundario); /* Usar secundario para footer */
+            color: white;
+            border-radius: 0 0 8px 8px;
+             margin: 30px -20px -20px -20px; /* Ajusta para que cubra el padding del contenedor */
+        }
+        footer p {
+             margin-bottom: 5px;
+        }
+
+        /* Utilidades */
+        .text-center { text-align: center; }
+        .math { font-family: 'Cambria Math', Times, serif; font-style: italic; } /* Para símbolos matemáticos sueltos */
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Guía Completa de Derivadas</h1>
+        <p>Tu referencia esencial para 1º de Bachillerato</p>
+    </header>
+
+    <main class="contenedor">
+        <section id="introduccion">
+            <h2>1. ¿Qué Narices es una Derivada? 🤔</h2>
+            <p>¡Bienvenido/a al emocionante mundo del Cálculo! Empecemos por el principio: la <strong>derivada</strong>. Puede sonar intimidante, pero la idea básica es bastante intuitiva.</p>
+            <p>Imagina que vas en bici por una carretera con cuestas. Tu velocidad cambia constantemente. La derivada es como un "velocímetro mágico" que te dice <strong>exactamente cómo de rápido está cambiando tu posición (o cualquier otra cosa que varíe) en un instante preciso</strong>.</p>
+            <div class="nota">
+                <p><strong>Idea Central:</strong> La derivada mide el <strong>ritmo de cambio instantáneo</strong> de una función en un punto específico.</p>
+            </div>
+            <h4>Analogía: Velocidad media vs. Velocidad instantánea</h4>
+            <p>Si haces un viaje de 180 km en 3 horas, tu velocidad media es 60 km/h. Pero seguro que no has ido a 60 km/h todo el tiempo. Has frenado, acelerado... La velocidad que marca el velocímetro en cada momento es la <em>velocidad instantánea</em>, ¡eso es como la derivada!</p>
+            <h4>La Idea Clave: Pendiente de la Curva</h4>
+            <p>Cuando dibujamos una función, obtenemos una curva. La derivada en un punto nos dice <strong>cuán inclinada está la curva en ese preciso punto</strong>. Matemáticamente, es la <strong>pendiente de la recta tangente</strong> a la curva en ese punto.</p>
+            <ul>
+                <li><strong>Derivada positiva (+):</strong> La función está "subiendo" (creciendo).</li>
+                <li><strong>Derivada negativa (-):</strong> La función está "bajando" (decreciendo).</li>
+                <li><strong>Derivada cero (0):</strong> La función está "plana" en ese instante (¡clave para máximos y mínimos!).</li>
+            </ul>
+        </section>
+
+        <section id="interpretacion-geometrica">
+            <h2>2. La Derivada como Pendiente de la Recta Tangente 📉</h2>
+            <p>Una <strong>recta tangente</strong> a una curva en un punto es una recta que "roza" la curva en ese punto, teniendo la misma dirección que la curva en ese instante.</p>
+            <div class="importante">
+                <p>El valor de la derivada de <code>f(x)</code> en <code>x = a</code>, escrito como <code>f'(a)</code>, es <strong>exactamente la pendiente (la inclinación)</strong> de la recta tangente a la gráfica de <code>y = f(x)</code> en el punto <code>(a, f(a))</code>.</p>
+            </div>
+
+            <div class="grafico">
+                <div class="grafico-titulo">Visual 1: Interpretación Geométrica de la Derivada</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="500" height="375">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                        </marker>
+                    </defs>
+                    {/* <!-- Ejes --> */}
+                    <line x1="20" y1="280" x2="380" y2="280" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)" />
+                    <line x1="50" y1="280" x2="50" y2="20" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)" />
+                    <text x="370" y="295" font-family="Arial" font-size="14">x</text>
+                    <text x="30" y="35" font-family="Arial" font-size="14">y</text>
+                    <text x="35" y="295" font-family="Arial" font-size="12">0</text>
+
+                     {/* <!-- Marcas Ejes --> */}
+                    <line x1="150" y1="277" x2="150" y2="283" stroke="#333" stroke-width="1" />
+                    <text x="150" y="295" font-family="Arial" font-size="12" text-anchor="middle">a</text>
+                    <line x1="47" y1="180" x2="53" y2="180" stroke="#333" stroke-width="1" />
+                    <text x="35" y="185" font-family="Arial" font-size="12" text-anchor="end">f(a)</text>
+
+                    {/* <!-- Curva (Parábola simple) --> */}
+                    <path d="M 50 280 Q 150 50 350 280" fill="none" stroke="var(--color-primario)" stroke-width="3" />
+                    <text x="280" y="100" font-family="Arial" font-size="14" fill="var(--color-primario)">y = f(x)</text>
+
+                    {/* <!-- Punto (a, f(a)) --> */}
+                    <circle cx="150" cy="180" r="5" fill="var(--color-acento)" />
+                    <text x="160" y="175" font-family="Arial" font-size="12" font-weight="bold">P(a, f(a))</text>
+                    <line x1="150" y1="280" x2="150" y2="180" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3" />
+                    <line x1="50" y1="180" x2="150" y2="180" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3" />
+
+
+                    {/* <!-- Recta Tangente --> */}
+                    <line x1="50" y1="280" x2="250" y2="80" stroke="var(--color-verde)" stroke-width="2" stroke-dasharray="5,3" />
+                     <text x="255" y="80" font-family="Arial" font-size="12" fill="var(--color-verde)" font-weight="bold">Recta Tangente</text>
+
+                    {/* <!-- Indicación de la pendiente --> */}
+                    <path d="M 170 180 L 200 180 L 200 150" fill="none" stroke="var(--color-acento)" stroke-width="1.5" />
+                    <text x="205" y="165" font-family="Arial" font-size="14" fill="var(--color-acento)" font-weight="bold">Pendiente = m = f'(a)</text>
+                </svg>
+                <div class="grafico-descripcion">Figura 1: La derivada f'(a) es la pendiente de la recta que toca la curva f(x) en el punto x=a.</div>
+            </div>
+        </section>
+
+        <section id="reglas-derivacion">
+            <h2>3. ¡La Caja de Herramientas! Reglas de Derivación 🛠️</h2>
+            <p>Calcular derivadas usando la definición formal (con límites) es largo. Por suerte, tenemos reglas que simplifican enormemente el proceso. ¡Apréndetelas bien!</p>
+
+            <h3>Reglas Fundamentales</h3>
+            <div class="formula"><strong>Constante:</strong> Si <code>f(x) = k</code> (<code>k</code> es un número), entonces <code>f'(x) = 0</code></div>
+            <div class="ejemplo"><code>f(x) = 8</code>  =>  <code>f'(x) = 0</code></div>
+
+            <div class="formula"><strong>Identidad:</strong> Si <code>f(x) = x</code>, entonces <code>f'(x) = 1</code></div>
+
+            <div class="formula"><strong>Potencia:</strong> Si <code>f(x) = xⁿ</code> (<code>n</code> es cualquier número real), entonces <code>f'(x) = n · xⁿ⁻¹</code></div>
+            <div class="ejemplo">
+                <code>f(x) = x⁵</code>  =>  <code>f'(x) = 5x⁴</code><br>
+                <code>g(x) = √x = x¹ᐟ²</code> => <code>g'(x) = ½ x⁻¹ᐟ² = 1 / (2√x)</code><br>
+                <code>h(x) = 1/x³ = x⁻³</code> => <code>h'(x) = -3x⁻⁴ = -3 / x⁴</code>
+            </div>
+
+            <div class="formula"><strong>Constante por Función:</strong> <code>(k · f(x))' = k · f'(x)</code></div>
+            <div class="ejemplo"><code>f(x) = 6x⁷</code> => <code>f'(x) = 6 · (7x⁶) = 42x⁶</code></div>
+
+            <div class="formula"><strong>Suma / Resta:</strong> <code>(f(x) ± g(x))' = f'(x) ± g'(x)</code></div>
+            <div class="ejemplo"><code>f(x) = x³ - 4x² + 7x - 2</code> => <code>f'(x) = 3x² - 8x + 7</code></div>
+
+            <h3>Reglas para Operaciones Más Complejas (¡Muy Importantes!)</h3>
+
+            <h4>Regla del Producto: <code>(u · v)' = u'v + uv'</code></h4>
+            <p>Se usa cuando tienes <strong>dos funciones que se multiplican</strong>.</p>
+            <div class="formula"><strong>Producto:</strong> <code>(f(x) · g(x))' = f'(x)g(x) + f(x)g'(x)</code><br>(Derivada del primero por el segundo SIN derivar + Primero SIN derivar por derivada del segundo)</div>
+            <div class="ejemplo">
+                Calcular la derivada de <code>h(x) = x² · sen(x)</code>.<br>
+                Identificamos: <code>f(x) = x²</code> (=> <code>f'(x) = 2x</code>) y <code>g(x) = sen(x)</code> (=> <code>g'(x) = cos(x)</code>).<br>
+                Aplicamos la regla: <code>h'(x) = (2x)(sen(x)) + (x²)(cos(x)) = 2x sen(x) + x² cos(x)</code>.
+            </div>
+
+            <h4>Regla del Cociente: <code>(u / v)' = (u'v - uv') / v²</code></h4>
+            <p>Se usa cuando tienes una <strong>función dividida por otra</strong>.</p>
+            <div class="formula"><strong>Cociente:</strong> <code>(f(x) / g(x))' = [f'(x)g(x) - f(x)g'(x)] / [g(x)]²</code><br>(Derivada del de arriba por el de abajo SIN derivar <strong>MENOS</strong> El de arriba SIN derivar por derivada del de abajo) TODO dividido por (el de abajo al cuadrado). ¡Cuidado con el orden y el signo menos!</div>
+            <div class="ejemplo">
+                Calcular la derivada de <code>h(x) = eˣ / (x+1)</code>.<br>
+                Identificamos: <code>f(x) = eˣ</code> (=> <code>f'(x) = eˣ</code>) y <code>g(x) = x+1</code> (=> <code>g'(x) = 1</code>).<br>
+                Aplicamos la regla: <code>h'(x) = [(eˣ)(x+1) - (eˣ)(1)] / (x+1)²</code><br>
+                <code>= [eˣ(x+1 - 1)] / (x+1)² = (x eˣ) / (x+1)²</code>. (Sacando factor común <code>eˣ</code>)
+            </div>
+
+            <h4>Regla de la Cadena: <code>(f(g(x)))' = f'(g(x)) · g'(x)</code> (¡La Reina de las Reglas!)</h4>
+            <p>Se usa para <strong>funciones compuestas</strong>, es decir, una "función dentro de otra función". Piensa en muñecas rusas.</p>
+            <div class="formula"><strong>Cadena:</strong> <code>(f(g(x)))' = f'(g(x)) · g'(x)</code><br>(Derivada de la función "exterior", evaluada en la función "interior" SIN cambiar, <strong>MULTIPLICADO</strong> por la derivada de la función "interior").</div>
+
+            <div class="grafico">
+                <div class="grafico-titulo">Visual A: Concepto de la Regla de la Cadena</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200" width="500" height="200">
+                    <defs>
+                        <marker id="arrow_cadena" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                        </marker>
+                         <filter id="shadow_cadena" x="-20%" y="-20%" width="140%" height="140%">
+                           <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                           <feOffset dx="2" dy="2" result="offsetblur"/>
+                           <feMerge>
+                             <feMergeNode/>
+                             <feMergeNode in="SourceGraphic"/>
+                           </feMerge>
+                         </filter>
+                    </defs>
+
+                    {/* <!-- Entrada X --> */}
+                    <text x="30" y="105" font-size="20" font-weight="bold">x</text>
+                    <line x1="50" y1="100" x2="100" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow_cadena)" />
+
+                    {/* <!-- Caja g(x) --> */}
+                    <rect x="100" y="70" width="100" height="60" rx="10" ry="10" fill="#d6eaf8" stroke="#2980b9" stroke-width="2" filter="url(#shadow_cadena)" />
+                    <text x="150" y="105" text-anchor="middle" font-size="18" font-weight="bold">g(x)</text>
+                     <text x="150" y="130" text-anchor="middle" font-size="14" fill="#555">(Función interior)</text>
+
+                    {/* <!-- Salida u=g(x) --> */}
+                     <text x="225" y="75" font-size="18">u = g(x)</text>
+                    <line x1="200" y1="100" x2="250" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow_cadena)" />
+
+                     {/* <!-- Caja f(u) --> */}
+                    <rect x="250" y="70" width="100" height="60" rx="10" ry="10" fill="#d5f5e3" stroke="#2ecc71" stroke-width="2" filter="url(#shadow_cadena)" />
+                    <text x="300" y="105" text-anchor="middle" font-size="18" font-weight="bold">f(u)</text>
+                    <text x="300" y="130" text-anchor="middle" font-size="14" fill="#555">(Función exterior)</text>
+
+                    {/* <!-- Salida y=f(g(x)) --> */}
+                    <line x1="350" y1="100" x2="400" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow_cadena)" />
+                    <text x="410" y="105" font-size="18">y = f(g(x))</text>
+
+                    {/* <!-- Explicación Derivada --> */}
+                    <text x="250" y="170" text-anchor="middle" font-size="16" font-weight="bold">Derivada: <tspan fill="#2ecc71">f'(g(x))</tspan> ⋅ <tspan fill="#2980b9">g'(x)</tspan></text>
+                </svg>
+                <div class="grafico-descripcion">Figura A: La Regla de la Cadena descompone la derivada en la derivada de "lo de fuera" evaluada en "lo de dentro", multiplicada por la derivada de "lo de dentro".</div>
+            </div>
+            <div class="ejemplo">
+                Calcular la derivada de <code>h(x) = (x² + 5)³</code>.<br>
+                Función exterior: <code>f(u) = u³</code> (=> <code>f'(u) = 3u²</code>).<br>
+                Función interior: <code>g(x) = x² + 5</code> (=> <code>g'(x) = 2x</code>).<br>
+                Aplicamos la regla: <code>h'(x) = f'(g(x)) · g'(x) = 3(x² + 5)² · (2x) = 6x(x² + 5)²</code>.
+            </div>
+            <div class="ejemplo">
+                Calcular la derivada de <code>h(x) = cos(4x)</code>.<br>
+                Exterior: <code>f(u) = cos(u)</code> (=> <code>f'(u) = -sen(u)</code>).<br>
+                Interior: <code>g(x) = 4x</code> (=> <code>g'(x) = 4</code>).<br>
+                Aplicamos la regla: <code>h'(x) = -sen(4x) · 4 = -4 sen(4x)</code>.
+            </div>
+        </section>
+
+        <section id="trigonometria">
+            <h2>4. Un Viaje por la Trigonometría y sus Derivadas 🔄</h2>
+
+            <h3>El Círculo Mágico (Unidad): ¿De Dónde Salen Seno, Coseno y Tangente?</h3>
+            <p>La base de la trigonometría está en la <strong>circunferencia goniométrica</strong> (o círculo unidad): una circunferencia de radio 1 centrada en el origen (0,0). Si tomamos un ángulo <code>α</code> (medido desde el eje X positivo en sentido antihorario) y vemos dónde corta a la circunferencia en el punto P, sus coordenadas son precisamente <code>(cos α, sen α)</code>.</p>
+            <ul>
+                <li><code>cos(α)</code>: Coordenada X del punto P.</li>
+                <li><code>sen(α)</code>: Coordenada Y del punto P.</li>
+                <li><code>tan(α)</code>: Es la pendiente del radio OP, igual a <code>sen(α) / cos(α)</code>. También es la longitud del segmento vertical sobre la recta tangente al círculo en (1,0) hasta cortar la prolongación del radio.</li>
+            </ul>
+            <div class="grafico">
+                <div class="grafico-titulo">Visual 2: El Círculo Unidad (Goniométrico)</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -150 300 300" width="350" height="350">
+                    <defs>
+                         <marker id="arrow_trig" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+                            <polygon points="0 0, 7 2.5, 0 5" fill="#333" />
+                        </marker>
+                    </defs>
+                    {/* <!-- Ejes --> */}
+                    <line x1="-140" y1="0" x2="140" y2="0" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_trig)" />
+                    <line x1="0" y1="140" x2="0" y2="-140" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_trig)" />
+                    <text x="145" y="10" font-size="12">x</text>
+                    <text x="5" y="-145" font-size="12">y</text>
+
+                    {/* <!-- Círculo Unidad --> */}
+                    <circle cx="0" cy="0" r="100" fill="none" stroke="var(--color-primario)" stroke-width="2"/>
+                    <text x="105" y="-5" font-size="10">(1,0)</text>
+                    <text x="-125" y="-5" font-size="10">(-1,0)</text>
+                    <text x="-15" y="-105" font-size="10">(0,1)</text>
+                    <text x="-15" y="115" font-size="10">(0,-1)</text>
+
+                    {/* <!-- Ángulo alpha y Punto P --> */}
+                    <path d="M 30 0 A 30 30 0 0 1 21.21 21.21" fill="none" stroke="#555" stroke-width="1"/>
+                    <text x="35" y="15" font-size="14" class="math">α</text>
+                    <line x1="0" y1="0" x2="70.71" y2="-70.71" stroke="var(--color-secundario)" stroke-width="1.5" /> {/* Radio a 45 grados (cos=sqrt(2)/2, sen=sqrt(2)/2) * 100 */}
+                    <circle cx="70.71" cy="-70.71" r="4" fill="var(--color-acento)" />
+                    <text x="75" y="-80" font-size="12" font-weight="bold">P(cos α, sen α)</text>
+
+                    {/* <!-- Seno y Coseno --> */}
+                    <line x1="70.71" y1="0" x2="70.71" y2="-70.71" stroke="var(--color-verde)" stroke-width="2" stroke-dasharray="4,2" />
+                    <text x="80" y="-35" fill="var(--color-verde)" font-size="12" font-weight="bold">sen α</text>
+                    <line x1="0" y1="0" x2="70.71" y2="0" stroke="var(--color-acento)" stroke-width="2" stroke-dasharray="4,2" />
+                    <text x="35" y="15" fill="var(--color-acento)" font-size="12" font-weight="bold">cos α</text>
+
+                     {/* <!-- Tangente --> */}
+                     <line x1="100" y1="0" x2="100" y2="-100" stroke="var(--color-amarillo)" stroke-width="3"/>
+                     <line x1="0" y1="0" x2="100" y2="-100" stroke="var(--color-secundario)" stroke-width="1" stroke-dasharray="2,2"/> {/* Prolongación del radio */}
+                     <text x="105" y="-50" fill="var(--color-amarillo)" font-size="12" font-weight="bold">tan α</text>
+                     <line x1="100" y1="0" x2="140" y2="0" stroke="#333" stroke-width="1" /> {/* Eje X más allá de 1 */}
+
+                </svg>
+                <div class="grafico-descripcion">Figura 2: El Círculo Unidad mostrando cómo se definen seno, coseno y tangente para un ángulo α.</div>
+            </div>
+
+            <h3>Derivadas de Seno, Coseno y Tangente</h3>
+            <div class="formula"><code>(sen x)' = cos x</code></div>
+            <div class="formula"><code>(cos x)' = -sen x</code></div>
+            <div class="formula"><code>(tan x)' = sec² x = 1 / cos² x</code></div>
+            <div class="nota">
+                <p><strong>Curiosidad:</strong> La derivada de <code>tan x</code> se puede obtener usando la Regla del Cociente, ya que <code>tan x = sen x / cos x</code>.</p>
+                 <p><code>(tan x)' = ( (sen x)' cos x - sen x (cos x)' ) / (cos x)²</code><br>
+                    <code>= ( cos x · cos x - sen x · (-sen x) ) / cos² x</code><br>
+                    <code>= ( cos² x + sen² x ) / cos² x</code><br>
+                    <code>= 1 / cos² x = sec² x</code> (¡Usando la identidad fundamental <code>sen²x + cos²x = 1</code>!)</p>
+            </div>
+            <div class="grafico">
+                <div class="grafico-titulo">Visual 3: Funciones Trigonométricas y sus Derivadas</div>
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 450" width="600" height="450">
+                     <defs>
+                         <marker id="arrow_trig_deriv" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#333" />
+                        </marker>
+                    </defs>
+
+                     {/* <!-- Par 1: sen(x) y cos(x) --> */}
+                     {/* Ejes */}
+                     <line x1="20" y1="75" x2="240" y2="75" stroke="#555" stroke-width="1" marker-end="url(#arrow_trig_deriv)"/>
+                     <line x1="30" y1="130" x2="30" y2="20" stroke="#555" stroke-width="1" marker-end="url(#arrow_trig_deriv)"/>
+                     <text x="10" y="25" font-size="10">y</text> <text x="235" y="90" font-size="10">x</text>
+                     {/* Marcas eje x */}
+                     <line x1="78" y1="72" x2="78" y2="78" stroke="#555"/> <text x="78" y="90" font-size="9" text-anchor="middle">π/2</text>
+                     <line x1="126" y1="72" x2="126" y2="78" stroke="#555"/> <text x="126" y="90" font-size="9" text-anchor="middle">π</text>
+                     <line x1="174" y1="72" x2="174" y2="78" stroke="#555"/> <text x="174" y="90" font-size="9" text-anchor="middle">3π/2</text>
+                     <line x1="222" y1="72" x2="222" y2="78" stroke="#555"/> <text x="222" y="90" font-size="9" text-anchor="middle">2π</text>
+                     {/* Funciones */}
+                     <path d="M 30 75 Q 54 25 78 75 Q 102 125 126 75 Q 150 25 174 75 Q 198 125 222 75" fill="none" stroke="var(--color-primario)" stroke-width="2"/>
+                     <path d="M 30 25 Q 54 75 78 125 Q 102 75 126 25 Q 150 75 174 125 Q 198 75 222 25" fill="none" stroke="var(--color-verde)" stroke-width="2" stroke-dasharray="4,2"/>
+                     <text x="180" y="40" font-size="11" fill="var(--color-primario)">sen(x)</text>
+                     <text x="180" y="115" font-size="11" fill="var(--color-verde)">cos(x)</text>
+                     {/* Puntos clave */}
+                     <circle cx="78" cy="25" r="2" fill="var(--color-primario)"/> <circle cx="78" cy="75" r="2" fill="var(--color-verde)"/>
+                     <circle cx="174" cy="125" r="2" fill="var(--color-primario)"/> <circle cx="174" cy="75" r="2" fill="var(--color-verde)"/>
+                     <line x1="78" y1="25" x2="78" y2="75" stroke="#aaa" stroke-dasharray="2,2"/>
+                     <line x1="174" y1="125" x2="174" y2="75" stroke="#aaa" stroke-dasharray="2,2"/>
+
+                     {/* <!-- Par 2: cos(x) y -sen(x) --> */}
+                     {/* Ejes */}
+                      <line x1="270" y1="75" x2="490" y2="75" stroke="#555" stroke-width="1" marker-end="url(#arrow_trig_deriv)"/>
+                     <line x1="280" y1="130" x2="280" y2="20" stroke="#555" stroke-width="1" marker-end="url(#arrow_trig_deriv)"/>
+                     <text x="260" y="25" font-size="10">y</text> <text x="485" y="90" font-size="10">x</text>
+                      {/* Marcas eje x */}
+                     <line x1="328" y1="72" x2="328" y2="78" stroke="#555"/> <text x="328" y="90" font-size="9" text-anchor="middle">π/2</text>
+                     <line x1="376" y1="72" x2="376" y2="78" stroke="#555"/> <text x="376" y="90" font-size="9" text-anchor="middle">π</text>
+                     <line x1="424" y1="72" x2="424" y2="78" stroke="#555"/> <text x="424" y="90" font-size="9" text-anchor="middle">3π/2</text>
+                     <line x1="472" y1="72" x2="472" y2="78" stroke="#555"/> <text x="472" y="90" font-size="9" text-anchor="middle">2π</text>
+                     {/* Funciones */}
+                     <path d="M 280 25 Q 304 75 328 125 Q 352 75 376 25 Q 400 75 424 125 Q 448 75 472 25" fill="none" stroke="var(--color-primario)" stroke-width="2"/>
+                     <path d="M 280 75 Q 304 125 328 75 Q 352 25 376 75 Q 400 125 424 75 Q 448 25 472 75" fill="none" stroke="var(--color-verde)" stroke-width="2" stroke-dasharray="4,2"/>
+                      <text x="430" y="40" font-size="11" fill="var(--color-primario)">cos(x)</text>
+                     <text x="430" y="115" font-size="11" fill="var(--color-verde)">-sen(x)</text>
+                     {/* Puntos clave */}
+                     <circle cx="376" cy="25" r="2" fill="var(--color-primario)"/> <circle cx="376" cy="75" r="2" fill="var(--color-verde)"/>
+                     <circle cx="472" cy="25" r="2" fill="var(--color-primario)"/> <circle cx="472" cy="75" r="2" fill="var(--color-verde)"/>
+                      <line x1="376" y1="25" x2="376" y2="75" stroke="#aaa" stroke-dasharray="2,2"/>
+                     <line x1="472" y1="25" x2="472" y2="75" stroke="#aaa" stroke-dasharray="2,2"/>
+
+
+                     {/* <!-- Par 3: tan(x) y sec^2(x) --> */}
+                     {/* Ejes */}
+                     <line x1="20" y1="250" x2="480" y2="250" stroke="#555" stroke-width="1" marker-end="url(#arrow_trig_deriv)"/>
+                     <line x1="250" y1="350" x2="250" y2="150" stroke="#555" stroke-width="1" marker-end="url(#arrow_trig_deriv)"/>
+                     <text x="235" y="155" font-size="10">y</text> <text x="475" y="265" font-size="10">x</text>
+                     {/* Asíntotas */}
+                     <line x1="130" y1="150" x2="130" y2="350" stroke="var(--color-acento)" stroke-width="1" stroke-dasharray="3,3"/> <text x="130" y="365" font-size="9" text-anchor="middle">-π/2</text>
+                     <line x1="370" y1="150" x2="370" y2="350" stroke="var(--color-acento)" stroke-width="1" stroke-dasharray="3,3"/> <text x="370" y="365" font-size="9" text-anchor="middle">π/2</text>
+                     <text x="250" y="265" font-size="9" text-anchor="middle">0</text>
+                     {/* Funciones */}
+                      <path d="M 135 350 Q 200 250 250 250 Q 300 250 365 150" fill="none" stroke="var(--color-primario)" stroke-width="2"/>
+                     <path d="M 135 180 Q 250 160 365 180" fill="none" stroke="var(--color-verde)" stroke-width="2" stroke-dasharray="4,2"/>
+                     <text x="300" y="200" font-size="11" fill="var(--color-primario)">tan(x)</text>
+                      <text x="300" y="175" font-size="11" fill="var(--color-verde)">sec²(x)</text>
+                      {/* Marcas eje y para sec^2(x) */}
+                      <line x1="247" y1="190" x2="253" y2="190" stroke="#555"/> <text x="240" y="193" font-size="9">1</text>
+
+                 </svg>
+                <div class="grafico-descripcion">Figura 3: Comparativa de Seno, Coseno, Tangente (azul sólido) con sus derivadas (verde discontinuo). Observa cómo los máximos/mínimos de la función coinciden con los ceros de la derivada.</div>
+            </div>
+
+            <h3>Las "Otras" Funciones Trigonométricas y sus Derivadas</h3>
+            <p>Existen otras tres funciones, definidas como las inversas multiplicativas de las anteriores:</p>
+            <ul>
+                <li><strong>Secante:</strong> <code>sec(x) = 1 / cos(x)</code></li>
+                <li><strong>Cosecante:</strong> <code>csc(x) = 1 / sen(x)</code> (a veces <code>cosec(x)</code>)</li>
+                <li><strong>Cotangente:</strong> <code>cot(x) = 1 / tan(x) = cos(x) / sen(x)</code></li>
+            </ul>
+            <p>Sus derivadas, que puedes obtener usando la Regla del Cociente o Cadena, son:</p>
+            <div class="formula"><code>(sec x)' = sec x · tan x</code></div>
+            <div class="formula"><code>(csc x)' = -csc x · cot x</code></div>
+            <div class="formula"><code>(cot x)' = -csc² x</code></div>
+            <div class="ejemplo">
+                <strong>Derivando <code>sec x</code> usando Regla de Cadena:</strong><br>
+                <code>sec x = (cos x)⁻¹</code>. Exterior: <code>u⁻¹</code> (derivada <code>-u⁻²</code>). Interior: <code>cos x</code> (derivada <code>-sen x</code>).<br>
+                <code>(sec x)' = - (cos x)⁻² · (-sen x) = sen x / cos² x</code><br>
+                <code>= (1 / cos x) · (sen x / cos x) = sec x · tan x</code>. ¡Funciona!
+            </div>
+
+            <h3>Buscando el Ángulo: Funciones Trigonométricas Inversas</h3>
+            <p>Si conoces el valor del seno (o coseno, o tangente) y quieres saber <strong>qué ángulo</strong> le corresponde, usas las funciones inversas. ¡Ojo! No son <code>1/sen(x)</code>, sino funciones nuevas:</p>
+            <ul>
+                <li><code>arcsen(y)</code> (ó <code>sin⁻¹ y</code>): Da el ángulo <code>x</code> en [-π/2, π/2] tal que <code>sen(x) = y</code>.</li>
+                <li><code>arccos(y)</code> (ó <code>cos⁻¹ y</code>): Da el ángulo <code>x</code> en [0, π] tal que <code>cos(x) = y</code>.</li>
+                <li><code>arctan(y)</code> (ó <code>tan⁻¹ y</code>): Da el ángulo <code>x</code> en (-π/2, π/2) tal que <code>tan(x) = y</code>.</li>
+            </ul>
+            <p>Sus derivadas son muy útiles (¡y un poco raras al principio!):</p>
+            <div class="formula"><code>(arcsen x)' = 1 / √(1 - x²)</code>   (para -1 < x < 1)</div>
+            <div class="formula"><code>(arccos x)' = -1 / √(1 - x²)</code>  (para -1 < x < 1)</div>
+            <div class="formula"><code>(arctan x)' = 1 / (1 + x²)</code></div>
+            <div class="ejemplo">
+                Calcular la derivada de <code>h(x) = arcsen(x²)</code> usando Regla de Cadena.<br>
+                Exterior: <code>f(u) = arcsen(u)</code> (derivada <code>1/√(1-u²)</code>).<br>
+                Interior: <code>g(x) = x²</code> (derivada <code>2x</code>).<br>
+                <code>h'(x) = [ 1 / √(1 - (x²)²) ] · (2x) = 2x / √(1 - x⁴)</code>.
+            </div>
+        </section>
+
+        <section id="exponencial-logaritmo">
+            <h2>5. El Mundo Exponencial y Logarítmico 🌿📈</h2>
+
+            <h3>El Número <code>e</code> y la Función Exponencial <code>eˣ</code></h3>
+            <p>El número <code>e</code> (<code>≈ 2.71828...</code>) es una constante fundamental en matemáticas, base de los logaritmos naturales. La función <code>f(x) = eˣ</code> (exponencial natural) es especial porque...</p>
+            <div class="formula"><strong>¡Su derivada es ella misma!</strong> <code>(eˣ)' = eˣ</code></div>
+            <p>Esta propiedad única la hace aparecer constantemente en modelos de crecimiento, decaimiento, interés compuesto, etc.</p>
+             <div class="grafico">
+                <div class="grafico-titulo">Visual 4: La Función Exponencial y=eˣ</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 400 300" width="400" height="300">
+                    <defs>
+                        <marker id="arrow_exp" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                           <polygon points="0 0, 8 3, 0 6" fill="#333" />
+                       </marker>
+                   </defs>
+                   {/* <!-- Ejes --> */}
+                   <line x1="0" y1="200" x2="350" y2="200" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_exp)" />
+                   <line x1="50" y1="250" x2="50" y2="0" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_exp)" />
+                   <text x="345" y="215" font-size="12">x</text> <text x="35" y="15" font-size="12">y</text>
+                   <text x="40" y="215" font-size="10">0</text>
+
+                   {/* <!-- Marcas Ejes --> */}
+                   <line x1="100" y1="197" x2="100" y2="203" stroke="#333"/> <text x="100" y="215" font-size="10" text-anchor="middle">1</text>
+                   <line x1="150" y1="197" x2="150" y2="203" stroke="#333"/> <text x="150" y="215" font-size="10" text-anchor="middle">2</text>
+                   <line x1="47" y1="173" x2="53" y2="173" stroke="#333"/> <text x="40" y="176" font-size="10">1 (e⁰)</text> {/* y=1 para x=0 */}
+                   <line x1="47" y1="127" x2="53" y2="127" stroke="#333"/> <text x="40" y="130" font-size="10">e¹≈2.7</text> {/* y=e para x=1 */}
+                   <line x1="47" y1="30" x2="53" y2="30" stroke="#333"/> <text x="40" y="33" font-size="10">e²≈7.4</text> {/* y=e^2 para x=2 */}
+
+                   {/* <!-- Función e^x --> */}
+                   <path d="M 50 200 Q 50 190, 55 180 C 70 150, 100 127, 150 30" fill="none" stroke="var(--color-primario)" stroke-width="3"/>
+                    <text x="160" y="40" font-size="14" fill="var(--color-primario)" font-weight="bold">y = eˣ</text>
+
+                    {/* <!-- Punto (0,1) --> */}
+                   <circle cx="50" cy="173" r="4" fill="var(--color-acento)"/>
+                   <text x="60" y="170" font-size="11">(0, 1)</text>
+
+                    {/* <!-- Tangente en (0,1) -> y = x+1 --> */}
+                   {/* <line x1="0" y1="223" x2="100" y2="123" stroke="var(--color-verde)" stroke-width="1.5" stroke-dasharray="4,2"/>
+                   <text x="105" y="120" font-size="10" fill="var(--color-verde)">y=x+1</text> */}
+                   <text x="150" y="100" font-size="12" fill="var(--color-acento)" font-weight="bold">(eˣ)' = eˣ</text>
+
+                </svg>
+                <div class="grafico-descripcion">Figura 4: La función exponencial y=eˣ. Siempre positiva, pasa por (0,1) y crece muy rápido. ¡Su derivada es ella misma!</div>
+            </div>
+
+            <h3>El Logaritmo Natural <code>ln(x)</code></h3>
+            <p>El logaritmo natural <code>f(x) = ln(x)</code> es la función <strong>inversa</strong> de <code>eˣ</code>. Esto significa que <code>ln(eˣ) = x</code> y <code>e^(ln x) = x</code>.</p>
+            <div class="importante"><p>¡Recuerda! El logaritmo natural <strong>solo está definido para números positivos</strong> (<code>x > 0</code>).</p></div>
+            <p>Su derivada es sorprendentemente simple:</p>
+            <div class="formula"><strong><code>(ln x)' = 1 / x</code></strong></div>
+             <div class="grafico">
+                <div class="grafico-titulo">Visual 5: La Función Logaritmo Natural y=ln(x)</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -150 400 300" width="400" height="350">
+                     <defs>
+                        <marker id="arrow_ln" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                           <polygon points="0 0, 8 3, 0 6" fill="#333" />
+                       </marker>
+                   </defs>
+                   {/* <!-- Ejes --> */}
+                   <line x1="0" y1="0" x2="350" y2="0" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_ln)" />
+                   <line x1="50" y1="100" x2="50" y2="-150" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_ln)" />
+                   <text x="345" y="15" font-size="12">x</text> <text x="35" y="-145" font-size="12">y</text>
+                   <text x="40" y="15" font-size="10">0</text>
+
+                   {/* <!-- Marcas Ejes --> */}
+                   <line x1="77" y1="-3" x2="77" y2="3" stroke="#333"/> <text x="77" y="15" font-size="10" text-anchor="middle">1</text> {/* x=1 */}
+                   <line x1="136" y1="-3" x2="136" y2="3" stroke="#333"/> <text x="136" y="15" font-size="10" text-anchor="middle">e≈2.7</text> {/* x=e */}
+                   <line x1="47" y1="-50" x2="53" y2="-50" stroke="#333"/> <text x="40" y="-47" font-size="10">1</text> {/* y=1 */}
+
+                   {/* <!-- Función ln(x) --> */}
+                   <path d="M 50 100 C 55 -20, 77 0, 136 -50 C 200 -80, 350 -120" fill="none" stroke="var(--color-primario)" stroke-width="3"/>
+                    <text x="250" y="-100" font-size="14" fill="var(--color-primario)" font-weight="bold">y = ln(x)</text>
+
+                    {/* <!-- Punto (1,0) --> */}
+                   <circle cx="77" cy="0" r="4" fill="var(--color-acento)"/>
+                   <text x="85" y="-5" font-size="11">(1, 0)</text>
+
+                   {/* <!-- Punto (e,1) --> */}
+                   <circle cx="136" cy="-50" r="4" fill="var(--color-acento)"/>
+                   <text x="145" y="-55" font-size="11">(e, 1)</text>
+
+                    {/* <!-- Opcional: y=e^x y y=x para mostrar inversión --> */}
+                   <line x1="0" y1="50" x2="200" y2="-150" stroke="#ccc" stroke-width="1.5" stroke-dasharray="4,4"/> {/* y=x */}
+                   <path d="M 0 -136 C 20 -77, 50 -50, 70 -20 C 80 0, 100 50" fill="none" stroke="var(--color-verde)" stroke-width="2" stroke-dasharray="3,3"/> {/* y=e^x */}
+                   <text x="80" y="60" font-size="10" fill="var(--color-verde)">y=eˣ</text>
+                   <text x="150" y="-130" font-size="10" fill="#aaa">y=x</text>
+
+                   <text x="200" y="50" font-size="12" fill="var(--color-acento)" font-weight="bold">(ln x)' = 1/x</text>
+
+                </svg>
+                <div class="grafico-descripcion">Figura 5: La función logaritmo natural y=ln(x). Definida para x>0, pasa por (1,0) y crece lentamente. Es la inversa de y=eˣ respecto a la recta y=x.</div>
+            </div>
+
+            <h3>Ejemplos Combinados (Usando las Reglas)</h3>
+            <div class="ejemplo">
+                Derivada de <code>h(x) = x³ ln(x)</code> (Producto):<br>
+                <code>h'(x) = (3x²)(ln x) + (x³)(1/x) = 3x² ln x + x² = x²(3 ln x + 1)</code>.
+            </div>
+            <div class="ejemplo">
+                Derivada de <code>h(x) = sen(eˣ)</code> (Cadena):<br>
+                Exterior: <code>sen(u)</code> (derivada <code>cos(u)</code>). Interior: <code>eˣ</code> (derivada <code>eˣ</code>).<br>
+                <code>h'(x) = cos(eˣ) · eˣ = eˣ cos(eˣ)</code>.
+            </div>
+             <div class="ejemplo">
+                Derivada de <code>h(x) = ln(tan x)</code> (Cadena):<br>
+                Exterior: <code>ln(u)</code> (derivada <code>1/u</code>). Interior: <code>tan x</code> (derivada <code>sec²x</code>).<br>
+                <code>h'(x) = [ 1 / tan(x) ] · sec²x = (cos x / sen x) · (1 / cos² x) = 1 / (sen x cos x)</code>.
+                 (También se puede escribir como <code>cot(x) sec²(x)</code> o <code>csc(x) sec(x)</code>).
+            </div>
+        </section>
+
+        <section id="maximos-minimos">
+            <h2>6. ¡Encontrando Cimas y Valles! Máximos y Mínimos ⛰️</h2>
+            <p>Una de las aplicaciones estrella de las derivadas es localizar los <strong>máximos</strong> (puntos más altos) y <strong>mínimos</strong> (puntos más bajos) de una función, al menos localmente.</p>
+            <h4>La Conexión Clave: Derivada y Monotonía</h4>
+            <div class="importante">
+                <ul>
+                    <li>Si <code>f'(x) > 0</code> en un intervalo ⇒ <code>f(x)</code> es <strong>creciente</strong> (↗) en ese intervalo.</li>
+                    <li>Si <code>f'(x) < 0</code> en un intervalo ⇒ <code>f(x)</code> es <strong>decreciente</strong> (↘) en ese intervalo.</li>
+                    <li>Si <code>f'(x) = 0</code> en un punto ⇒ La tangente es horizontal (—). ¡Candidato a máximo o mínimo!</li>
+                </ul>
+            </div>
+            <h4>Puntos Críticos: Los Sospechosos Habituales</h4>
+            <p>Los <strong>puntos críticos</strong> (o puntos singulares) de <code>f(x)</code> son aquellos valores <code>x</code> del dominio donde <code>f'(x) = 0</code> o donde <code>f'(x)</code> no existe. ¡Los máximos y mínimos locales solo pueden ocurrir en puntos críticos!</p>
+            <p>¿Por qué <code>f'(x)=0</code>? Piensa en la cima de una colina o el fondo de un valle: justo en ese punto, la pendiente es cero (la tangente es horizontal).</p>
+
+            <h4>Pasos para Encontrar Máximos y Mínimos Locales:</h4>
+            <ol>
+                <li>Calcula la derivada <code>f'(x)</code>.</li>
+                <li>Encuentra los puntos críticos: resuelve <code>f'(x) = 0</code> y busca dónde <code>f'(x)</code> no existe (pero <code>f(x)</code> sí).</li>
+                <li>Estudia el <strong>signo</strong> de <code>f'(x)</code> en los intervalos definidos por los puntos críticos:
+                    <ul>
+                        <li>Si <code>f'</code> cambia de <strong>+ a -</strong> en un punto crítico <code>c</code> ⇒ Hay un <strong>Máximo Local</strong> en <code>x=c</code>. (Sube ↗ y luego baja ↘).</li>
+                        <li>Si <code>f'</code> cambia de <strong>- a +</strong> en un punto crítico <code>c</code> ⇒ Hay un <strong>Mínimo Local</strong> en <code>x=c</code>. (Baja ↘ y luego sube ↗).</li>
+                        <li>Si <code>f'</code> <strong>no cambia de signo</strong> ⇒ Es un punto de inflexión con tangente horizontal (ni máx. ni min. local).</li>
+                    </ul>
+                </li>
+                <li>Calcula el valor de <code>f(x)</code> en los máximos y mínimos encontrados para dar las coordenadas completas del punto (opcional pero recomendable).</li>
+            </ol>
+
+            <div class="ejemplo">
+                <strong>Encontrar máx/mín locales de <code>f(x) = x³ - 3x + 1</code></strong><br>
+                1. <strong>Derivada:</strong> <code>f'(x) = 3x² - 3</code>.<br>
+                2. <strong>Puntos Críticos:</strong> <code>f'(x) = 0</code> ⇒ <code>3x² - 3 = 0</code> ⇒ <code>3(x² - 1) = 0</code> ⇒ <code>x² = 1</code>. Soluciones: <code>x = 1</code> y <code>x = -1</code>. (La derivada existe siempre).<br>
+                3. <strong>Estudio del Signo de f'(x) = 3(x-1)(x+1):</strong>
+                   <ul>
+                       <li>Intervalo <code>(-∞, -1)</code>: Elegimos <code>x=-2</code>. <code>f'(-2) = 3(-2)² - 3 = 12 - 3 = 9 > 0</code> (f es Creciente ↗).</li>
+                       <li>Intervalo <code>(-1, 1)</code>: Elegimos <code>x=0</code>. <code>f'(0) = 3(0)² - 3 = -3 < 0</code> (f es Decreciente ↘).</li>
+                       <li>Intervalo <code>(1, +∞)</code>: Elegimos <code>x=2</code>. <code>f'(2) = 3(2)² - 3 = 12 - 3 = 9 > 0</code> (f es Creciente ↗).</li>
+                   </ul>
+                4. <strong>Conclusiones:</strong>
+                   <ul>
+                       <li>En <code>x = -1</code>: f' cambia de + a -. Hay un <strong>Máximo Local</strong>. Valor: <code>f(-1) = (-1)³ - 3(-1) + 1 = -1 + 3 + 1 = 3</code>. Punto: (-1, 3).</li>
+                       <li>En <code>x = 1</code>: f' cambia de - a +. Hay un <strong>Mínimo Local</strong>. Valor: <code>f(1) = (1)³ - 3(1) + 1 = 1 - 3 + 1 = -1</code>. Punto: (1, -1).</li>
+                   </ul>
+            </div>
+
+            <div class="grafico">
+                 <div class="grafico-titulo">Visual 6: Máximos, Mínimos y Monotonía</div>
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="500" height="375">
+                      <defs>
+                        <marker id="arrow_maxmin" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                           <polygon points="0 0, 8 3, 0 6" fill="#333" />
+                       </marker>
+                   </defs>
+                    {/* <!-- Ejes --> */}
+                   <line x1="20" y1="150" x2="380" y2="150" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_maxmin)" />
+                   <line x1="50" y1="280" x2="50" y2="20" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_maxmin)" />
+                   <text x="375" y="165" font-size="12">x</text> <text x="35" y="35" font-size="12">y</text>
+                   <text x="40" y="165" font-size="10">0</text>
+
+                   {/* <!-- Marcas Ejes --> */}
+                   <line x1="150" y1="147" x2="150" y2="153" stroke="#333"/> <text x="150" y="165" font-size="10" text-anchor="middle">-1</text>
+                   <line x1="250" y1="147" x2="250" y2="153" stroke="#333"/> <text x="250" y="165" font-size="10" text-anchor="middle">1</text>
+                   <line x1="47" y1="50" x2="53" y2="50" stroke="#333"/> <text x="40" y="55" font-size="10">3</text>
+                   <line x1="47" y1="250" x2="53" y2="250" stroke="#333"/> <text x="40" y="255" font-size="10">-1</text>
+
+                    {/* <!-- Función f(x) = x^3 - 3x + 1 --> */}
+                    <path d="M 50 280 C 100 50, 150 50, 200 150 C 250 250, 300 250, 350 50" fill="none" stroke="var(--color-primario)" stroke-width="3"/>
+                    <text x="280" y="40" font-size="12" fill="var(--color-primario)">f(x)=x³-3x+1</text>
+
+                     {/* <!-- Máximo y Mínimo --> */}
+                    <circle cx="150" cy="50" r="5" fill="var(--color-acento)"/>
+                    <text x="155" y="45" font-size="11">Máx (-1, 3)</text>
+                    <line x1="120" y1="50" x2="180" y2="50" stroke="var(--color-acento)" stroke-width="2"/> {/* Tangente horizontal */}
+
+                    <circle cx="250" cy="250" r="5" fill="var(--color-acento)"/>
+                    <text x="255" y="265" font-size="11">Mín (1, -1)</text>
+                    <line x1="220" y1="250" x2="280" y2="250" stroke="var(--color-acento)" stroke-width="2"/> {/* Tangente horizontal */}
+
+                    {/* <!-- Indicadores de Monotonía --> */}
+                    <text x="90" y="100" font-size="12" fill="var(--color-verde)">f'(x) > 0 (↗)</text>
+                    <text x="200" y="100" font-size="12" fill="var(--color-acento)">f'(x) < 0 (↘)</text>
+                    <text x="310" y="100" font-size="12" fill="var(--color-verde)">f'(x) > 0 (↗)</text>
+
+                    {/* <!-- Líneas verticales en puntos críticos --> */}
+                    <line x1="150" y1="280" x2="150" y2="50" stroke="#aaa" stroke-dasharray="3,3"/>
+                    <line x1="250" y1="280" x2="250" y2="50" stroke="#aaa" stroke-dasharray="3,3"/>
+
+                 </svg>
+                <div class="grafico-descripcion">Figura 6: La función <code>f(x)=x³-3x+1</code> con su máximo local en x=-1 (f' cambia de + a -) y mínimo local en x=1 (f' cambia de - a +).</div>
+            </div>
+        </section>
+
+        <section id="visualizacion-f-vs-fprima">
+            <h2>7. Viendo el Futuro: ¿Qué nos dice <code>f'(x)</code> sobre <code>f(x)</code>? 🔮</h2>
+            <p>Comparar la gráfica de una función <code>f(x)</code> con la de su derivada <code>f'(x)</code> es increíblemente útil para entender el comportamiento de <code>f(x)</code>.</p>
+            <div class="nota">
+                <p><strong>Relación Fundamental:</strong></p>
+                <ul>
+                    <li>Donde <code>f'(x)</code> está <strong>por encima</strong> del eje X (<code>f' > 0</code>) ⇒ <code>f(x)</code> <strong>sube</strong> (crece).</li>
+                    <li>Donde <code>f'(x)</code> está <strong>por debajo</strong> del eje X (<code>f' < 0</code>) ⇒ <code>f(x)</code> <strong>baja</strong> (decrece).</li>
+                    <li>Donde <code>f'(x)</code> <strong>cruza</strong> el eje X (<code>f' = 0</code>) ⇒ <code>f(x)</code> tiene un <strong>punto crítico</strong> (tangente horizontal: posible máx/mín).</li>
+                </ul>
+            </div>
+
+            <div class="grafico">
+                <div class="grafico-titulo">Visual 7: Comparativa entre Función y su Derivada</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="500" height="625">
+                     <defs>
+                        <marker id="arrow_comp" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                           <polygon points="0 0, 8 3, 0 6" fill="#333" />
+                       </marker>
+                    </defs>
+
+                    {/* <!-- Gráfico Superior: f(x) = x^3 - 3x + 1 (misma que antes) --> */}
+                    {/* Ejes */}
+                    <line x1="20" y1="150" x2="380" y2="150" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_comp)" />
+                    <line x1="50" y1="250" x2="50" y2="50" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_comp)" />
+                    <text x="375" y="165" font-size="12">x</text> <text x="35" y="65" font-size="12">f(x)</text>
+                    {/* Marcas Ejes */}
+                   <line x1="150" y1="147" x2="150" y2="153" stroke="#333"/> <text x="150" y="165" font-size="10" text-anchor="middle">-1</text>
+                   <line x1="250" y1="147" x2="250" y2="153" stroke="#333"/> <text x="250" y="165" font-size="10" text-anchor="middle">1</text>
+                   <line x1="47" y1="70" x2="53" y2="70" stroke="#333"/> <text x="40" y="75" font-size="10">3</text>
+                   <line x1="47" y1="230" x2="53" y2="230" stroke="#333"/> <text x="40" y="235" font-size="10">-1</text>
+                   {/* Función */}
+                    <path d="M 50 250 C 100 70, 150 70, 200 150 C 250 230, 300 230, 350 70" fill="none" stroke="var(--color-primario)" stroke-width="3"/>
+                    <text x="280" y="60" font-size="12" fill="var(--color-primario)">f(x)=x³-3x+1</text>
+                    {/* Puntos críticos f(x) */}
+                    <circle cx="150" cy="70" r="4" fill="var(--color-acento)"/>
+                    <circle cx="250" cy="230" r="4" fill="var(--color-acento)"/>
+
+                    {/* <!-- Gráfico Inferior: f'(x) = 3x^2 - 3 --> */}
+                     {/* Ejes */}
+                    <line x1="20" y1="400" x2="380" y2="400" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_comp)" />
+                    <line x1="50" y1="500" x2="50" y2="300" stroke="#333" stroke-width="1.5" marker-end="url(#arrow_comp)" />
+                     <text x="375" y="415" font-size="12">x</text> <text x="35" y="315" font-size="12">f'(x)</text>
+                     {/* Marcas Ejes */}
+                   <line x1="150" y1="397" x2="150" y2="403" stroke="#333"/> <text x="150" y="415" font-size="10" text-anchor="middle">-1</text>
+                   <line x1="250" y1="397" x2="250" y2="403" stroke="#333"/> <text x="250" y="415" font-size="10" text-anchor="middle">1</text>
+                    <line x1="47" y1="421" x2="53" y2="421" stroke="#333"/> <text x="40" y="424" font-size="10">-3</text> {/* f'(0) = -3 */}
+                     {/* Función Derivada (Parábola) */}
+                     <path d="M 50 480 Q 150 400, 150 400 C 150 400, 200 421, 250 400 Q 250 400, 350 480" fill="none" stroke="var(--color-verde)" stroke-width="3"/>
+                     <text x="280" y="470" font-size="12" fill="var(--color-verde)">f'(x)=3x²-3</text>
+                     {/* Puntos críticos f'(x) (Ceros) */}
+                    <circle cx="150" cy="400" r="4" fill="var(--color-acento)"/>
+                    <circle cx="250" cy="400" r="4" fill="var(--color-acento)"/>
+
+                    {/* <!-- Líneas de Conexión --> */}
+                    <line x1="150" y1="70" x2="150" y2="400" stroke="var(--color-acento)" stroke-width="1.5" stroke-dasharray="5,3"/>
+                    <line x1="250" y1="230" x2="250" y2="400" stroke="var(--color-acento)" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+                    {/* <!-- Indicaciones de Signo de f' y Monotonía de f --> */}
+                     {/* Zona x < -1 */}
+                    <rect x="50" y="305" width="100" height="95" fill="rgba(46, 204, 113, 0.1)" />
+                    <text x="100" y="350" text-anchor="middle" font-size="11" fill="var(--color-verde)">f' > 0</text>
+                    <text x="100" y="100" text-anchor="middle" font-size="11" fill="var(--color-verde)">f crece ↗</text>
+                     {/* Zona -1 < x < 1 */}
+                     <rect x="150" y="305" width="100" height="95" fill="rgba(231, 76, 60, 0.1)" />
+                    <text x="200" y="440" text-anchor="middle" font-size="11" fill="var(--color-acento)">f' < 0</text>
+                     <text x="200" y="180" text-anchor="middle" font-size="11" fill="var(--color-acento)">f decrece ↘</text>
+                    {/* Zona x > 1 */}
+                     <rect x="250" y="305" width="100" height="95" fill="rgba(46, 204, 113, 0.1)" />
+                     <text x="300" y="350" text-anchor="middle" font-size="11" fill="var(--color-verde)">f' > 0</text>
+                     <text x="300" y="100" text-anchor="middle" font-size="11" fill="var(--color-verde)">f crece ↗</text>
+
+                </svg>
+                <div class="grafico-descripcion">Figura 7: Arriba <code>f(x)</code>, abajo <code>f'(x)</code>. Observa cómo los intervalos donde <code>f'(x)</code> es positiva/negativa coinciden con los intervalos de crecimiento/decrecimiento de <code>f(x)</code>, y los ceros de <code>f'(x)</code> marcan los máximos/mínimos de <code>f(x)</code>.</div>
+            </div>
+        </section>
+
+        <section id="resumen">
+            <h2>8. Resumen y ¡A Practicar! 🎉</h2>
+            <p>¡Felicidades por llegar hasta aquí! Has recorrido los conceptos fundamentales y las herramientas clave del cálculo de derivadas:</p>
+            <ul>
+                <li><strong>Qué es:</strong> La derivada mide el cambio instantáneo y la pendiente de la tangente.</li>
+                <li><strong>Reglas Básicas:</strong> Constante, Potencia, Suma/Resta, Constante por función.</li>
+                <li><strong>Reglas Avanzadas:</strong> Producto, Cociente y la importantísima Regla de la Cadena.</li>
+                <li><strong>Funciones Específicas:</strong> Derivadas de funciones trigonométricas (<code>sen, cos, tan, sec, csc, cot</code>), sus inversas (<code>arcsen, arccos, arctan</code>) y las funciones exponencial (<code>eˣ</code>) y logaritmo natural (<code>ln x</code>).</li>
+                <li><strong>Aplicaciones:</strong> Determinar crecimiento/decrecimiento y encontrar máximos y mínimos locales.</li>
+                <li><strong>Visualización:</strong> Entender la relación entre la gráfica de <code>f(x)</code> y la de <code>f'(x)</code>.</li>
+            </ul>
+            <p>Las derivadas son una de las herramientas más potentes de las matemáticas, con aplicaciones en física (velocidad, aceleración), economía (costes marginales, optimización), biología (tasas de crecimiento), ingeniería y mucho más.</p>
+            <div class="importante">
+                <p><strong>El Secreto es la Práctica:</strong> La única forma de dominar las derivadas es hacer muchos ejercicios. Empieza por aplicar las reglas básicas y poco a poco aborda problemas más complejos que combinen varias reglas. ¡No te rindas!</p>
+            </div>
+            <p class="text-center" style="font-size:1.5em; color: var(--color-secundario);"><strong>¡Mucho ánimo con tus estudios! 💪</strong></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Guía Completa de Derivadas para 1º de Bachillerato</p>
+        <p>Creada con ayuda de IA - ¡Verifica siempre los conceptos!</p>
+    </footer>
+</body>
+</html>
