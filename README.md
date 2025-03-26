@@ -43,7 +43,7 @@ La guía cubre los siguientes temas principales:
 
 ## 🚀 Cómo Ver la Página
 
-Simplemente haz clic en el enlace **[Ver la Guía en Vivo](https://tu_usuario.github.io/EnciclopediaCientifica/)** que aparece al principio de este README.
+Simplemente haz clic en el enlace **[Ver la Guía en Vivo](https://ekaitzsegurola.github.io/EnciclopediaCientifica/index.html)** que aparece al principio de este README.
 
 Alternativamente, puedes clonar el repositorio y abrir el fichero `index.html` directamente en tu navegador web.
 
