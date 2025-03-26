@@ -1,0 +1,26 @@
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Editores de Código y IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+
+# Logs y archivos temporales
+*.log
+*~
+*.swp
+*.tmp
+
+# Dependencias (por si añades JS más adelante)
+node_modules/
+
+# Archivos de build (por si usas herramientas)
+dist/
+build/
+out/
