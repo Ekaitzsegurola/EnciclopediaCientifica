@@ -2,7 +2,7 @@
 
 Este repositorio contiene el código fuente de una página web HTML estática que sirve como guía completa sobre el cálculo de derivadas, orientada a estudiantes de 1º de Bachillerato (o nivel similar).
 
-**✨ [Ver la Guía en Vivo](https://tu_usuario.github.io/nombre_del_repositorio/) ✨**
+**✨ [Ver la Guía en Vivo](https://ekaitzsegurola.github.io/EnciclopediaCientifica/index.html) ✨**
 
 ## 🎯 Propósito
 
