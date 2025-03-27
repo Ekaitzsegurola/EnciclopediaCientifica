@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa de Integrales - 1º Bachillerato</title>
+    <style>
+        /* Estilos generales (Idénticos a los de derivadas para consistencia) */
+        :root {
+            --color-primario: #3498db;       /* Azul claro */
+            --color-secundario: #2980b9;    /* Azul más oscuro */
+            --color-acento: #e74c3c;        /* Rojo/Naranja para énfasis */
+            --color-verde: #2ecc71;         /* Verde para éxito/positividad */
+            --color-amarillo: #f1c40f;     /* Amarillo para notas */
+            --color-fondo: #f9f9f9;         /* Fondo general muy claro */
+            --color-texto: #333;           /* Texto principal oscuro */
+            --color-borde: #ddd;           /* Bordes suaves */
+            --sombra: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--color-texto);
+            background-color: var(--color-fondo);
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff; /* Fondo blanco para el contenido principal */
+            box-shadow: var(--sombra);
+            border-radius: 8px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Encabezados */
+        header {
+            background-color: var(--color-verde); /* Cambiado a verde para diferenciar */
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin: -20px -20px 30px -20px; /* Ajusta para que cubra el padding del contenedor */
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: var(--color-secundario);
+            border-bottom: 2px solid var(--color-secundario);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: var(--color-primario); /* Usar primario para H3 */
+            margin-top: 30px;
+            font-size: 1.4em;
+        }
+         h4 {
+            color: var(--color-secundario); /* Usar secundario para H4 */
+            margin-top: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Elementos de contenido */
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .nota {
+            background-color: rgba(241, 196, 15, 0.1); /* Amarillo nota */
+            border-left: 4px solid var(--color-amarillo);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .ejemplo {
+            background-color: rgba(52, 152, 219, 0.1); /* Azul ejemplo (para variar) */
+            border: 1px solid var(--color-primario);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+         .ejemplo code {
+             background-color: rgba(52, 152, 219, 0.2);
+             padding: 3px 6px;
+         }
+
+        .importante {
+            background-color: rgba(231, 76, 60, 0.1); /* Rojo importante */
+            border-left: 4px solid var(--color-acento);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+            font-weight: bold;
+        }
+
+        /* Listas */
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 30px; /* Más indentación */
+        }
+
+        li {
+            margin-bottom: 10px; /* Más espacio entre items */
+        }
+
+        /* Fórmulas y código matemático */
+         code {
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em;
+        }
+
+        .formula {
+            font-family: 'Cambria Math', Times, serif;
+            font-size: 1.2em;
+            text-align: center;
+            margin: 25px auto;
+            padding: 15px;
+            background-color: #e8f8f5; /* Fondo verde muy claro para fórmulas */
+            border: 1px solid var(--color-verde);
+            border-radius: 5px;
+            display: block; /* Asegura que ocupe su propio espacio */
+            max-width: 80%; /* Limita el ancho para mejor lectura */
+            box-shadow: var(--sombra);
+        }
+         .formula strong { /* Resaltar nombres */
+             color: var(--color-secundario);
+         }
+         .integral-symbol { /* Estilo específico para el símbolo de integral */
+            font-size: 1.8em;
+            vertical-align: middle;
+            margin-right: 2px;
+         }
+         .dx { /* Para el 'dx' */
+            margin-left: 5px;
+            font-style: italic;
+         }
+
+        /* Gráficos */
+        .grafico {
+            background-color: white;
+            border: 1px solid var(--color-borde);
+            border-radius: 5px;
+            box-shadow: var(--sombra);
+            padding: 20px;
+            margin: 30px auto;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .grafico svg {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .grafico-titulo {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--color-secundario);
+            font-size: 1.1em;
+        }
+
+        .grafico-descripcion {
+            font-size: 0.95em;
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: var(--color-secundario);
+            color: white;
+            border-radius: 0 0 8px 8px;
+             margin: 30px -20px -20px -20px;
+        }
+        footer p {
+             margin-bottom: 5px;
+        }
+
+        /* Utilidades */
+        .text-center { text-align: center; }
+        .math { font-family: 'Cambria Math', Times, serif; font-style: italic; }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Guía Completa de Integrales</h1>
+        <p>El viaje inverso: de la derivada a la función original</p>
+    </header>
+
+    <main class="contenedor">
+        <section id="introduccion">
+            <h2>1. ¿Y Ahora Qué? Introducción a las Integrales 🧐</h2>
+            <p>Si la derivada era el "velocímetro" que nos decía cómo cambiaba algo, la <strong>integral</strong> es como la "máquina del tiempo" que nos permite <strong>reconstruir la cantidad total a partir de su ritmo de cambio</strong>.</p>
+            <p>Hay dos ideas principales conectadas con la integral:</p>
+            <ol>
+                <li><strong>La Antiderivada (Integral Indefinida):</strong> Es el proceso <strong>inverso</strong> a la derivación. Si conoces la derivada <code>f'(x)</code>, la integral te ayuda a encontrar la función original <code>f(x)</code> (bueno, casi... ¡ya veremos por qué!).</li>
+                <li><strong>El Área Bajo la Curva (Integral Definida):</strong> La integral también nos permite calcular el <strong>área exacta</strong> de regiones delimitadas por curvas, algo que con geometría básica suele ser imposible.</li>
+            </ol>
+            <div class="nota">
+                <p><strong>Idea Central:</strong> La integral "deshace" la derivada y calcula áreas acumuladas.</p>
+            </div>
+            <h4>Analogía: Velocidad y Distancia</h4>
+            <p>Si conoces tu velocidad instantánea (la derivada de la posición) en cada momento de un viaje, ¿puedes saber la distancia total recorrida? ¡Sí! Integrando la velocidad respecto al tiempo, obtienes la distancia. La integral acumula todos esos pequeños cambios de posición.</p>
+        </section>
+
+        <section id="interpretacion-geometrica">
+            <h2>2. La Integral como Área Bajo la Curva 📐</h2>
+            <p>Una de las interpretaciones más visuales y potentes de la integral es su conexión con el área.</p>
+            <p>La <strong>integral definida</strong> de una función <code>f(x)</code> entre dos puntos <code>x=a</code> y <code>x=b</code>, escrita como:</p>
+            <div class="formula">
+                <span class="integral-symbol">∫</span><sub>a</sub><sup>b</sup> f(x) <span class="dx">dx</span>
+            </div>
+            <p>representa el <strong>área neta</strong> entre la gráfica de <code>y=f(x)</code> y el eje X, desde <code>x=a</code> hasta <code>x=b</code>.</p>
+            <ul>
+                <li>Si <code>f(x)</code> está por encima del eje X, el área es positiva.</li>
+                <li>Si <code>f(x)</code> está por debajo del eje X, el área se cuenta como negativa.</li>
+                <li>El área neta es la suma de las áreas positivas menos la suma de las áreas negativas.</li>
+            </ul>
+            <div class="nota">
+                <p>Imagina dividir el área en muchísimos rectángulos pequeñitos bajo la curva y sumar sus áreas. La integral definida es el límite de esa suma cuando los rectángulos se hacen infinitamente finos (esto se llama Suma de Riemann).</p>
+            </div>
+
+            <div class="grafico">
+                <div class="grafico-titulo">Visual 1: Integral Definida como Área</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="500" height="375">
+                    <defs>
+                        <marker id="arrowhead_int" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                        </marker>
+                        <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="rgba(46, 204, 113, 0.4)" />
+                            <stop offset="100%" stop-color="rgba(46, 204, 113, 0.1)" />
+                        </linearGradient>
+                    </defs>
+                    {/* <!-- Ejes --> */}
+                    <line x1="20" y1="250" x2="380" y2="250" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead_int)" />
+                    <line x1="50" y1="280" x2="50" y2="20" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead_int)" />
+                    <text x="370" y="265" font-family="Arial" font-size="14">x</text>
+                    <text x="30" y="35" font-family="Arial" font-size="14">y</text>
+                    <text x="35" y="265" font-family="Arial" font-size="12">0</text>
+
+                     {/* <!-- Marcas Ejes --> */}
+                    <line x1="100" y1="247" x2="100" y2="253" stroke="#333" stroke-width="1" />
+                    <text x="100" y="268" font-family="Arial" font-size="12" text-anchor="middle">a</text>
+                    <line x1="300" y1="247" x2="300" y2="253" stroke="#333" stroke-width="1" />
+                    <text x="300" y="268" font-family="Arial" font-size="12" text-anchor="middle">b</text>
+
+                    {/* <!-- Curva f(x) --> */}
+                    <path id="curva" d="M 50 200 Q 150 50 250 100 T 350 150" fill="none" stroke="var(--color-primario)" stroke-width="3" />
+                    <text x="300" y="70" font-family="Arial" font-size="14" fill="var(--color-primario)">y = f(x)</text>
+
+                    {/* <!-- Área bajo la curva --> */}
+                    <path d="M 100 250 L 100 137.5 Q 150 50 250 100 T 300 118.75 L 300 250 Z" fill="url(#areaGradient)" stroke="var(--color-verde)" stroke-width="1" />
+                     {/* Puntos de la curva en a y b (aproximados de la Q-curva) */}
+                     <circle cx="100" cy="137.5" r="3" fill="var(--color-primario)" />
+                     <circle cx="300" cy="118.75" r="3" fill="var(--color-primario)" />
+
+                    {/* <!-- Texto del Área --> */}
+                    <text x="200" y="180" font-family="Arial" font-size="16" text-anchor="middle" fill="var(--color-verde)" font-weight="bold">Área = ∫<sub>a</sub><sup>b</sup> f(x) dx</text>
+                </svg>
+                <div class="grafico-descripcion">Figura 1: La integral definida calcula el área sombreada entre la curva y=f(x) y el eje x, desde x=a hasta x=b.</div>
+            </div>
+        </section>
+
+        <section id="teorema-fundamental">
+            <h2>3. El Puente Mágico: Teorema Fundamental del Cálculo 🌉</h2>
+            <p>Este teorema es la joya de la corona del cálculo, porque conecta las dos ideas de la integral (antiderivada y área) y también conecta la integral con la derivada.</p>
+            <p>Tiene dos partes:</p>
+            <h4>Parte 1: Derivada de una Integral</h4>
+            <p>Si defines una función <code>F(x)</code> como la integral de <code>f(t)</code> desde una constante <code>a</code> hasta <code>x</code>:</p>
+            <div class="formula">F(x) = <span class="integral-symbol">∫</span><sub>a</sub><sup>x</sup> f(t) <span class="dx">dt</span></div>
+            <p>Entonces, la derivada de <code>F(x)</code> es simplemente la función original <code>f(x)</code>:</p>
+            <div class="formula">F'(x) = f(x)</div>
+            <p>Esto confirma que la integración (definida de esta forma) es la operación inversa de la derivación.</p>
+
+            <h4>Parte 2: Regla de Barrow (¡La que más usarás!)</h4>
+            <p>Esta parte nos da la herramienta práctica para calcular integrales definidas (áreas):</p>
+            <div class="importante">
+                <p>Si <code>F(x)</code> es <strong>cualquier</strong> antiderivada de <code>f(x)</code> (es decir, <code>F'(x) = f(x)</code>), entonces:</p>
+                <div class="formula">
+                    <span class="integral-symbol">∫</span><sub>a</sub><sup>b</sup> f(x) <span class="dx">dx</span> = F(b) - F(a)
+                </div>
+                <p>Esto se suele escribir también como: <code>[F(x)]<sub>a</sub><sup>b</sup> = F(b) - F(a)</code>.</p>
+            </div>
+            <div class="ejemplo">
+                Calcular el área bajo <code>f(x) = x²</code> entre <code>x=1</code> y <code>x=3</code>.<br>
+                1. <strong>Encuentra una antiderivada:</strong> Sabemos que la derivada de <code>x³</code> es <code>3x²</code>. Para obtener <code>x²</code>, la antiderivada debe ser <code>F(x) = x³/3</code>. (Comprueba: <code>F'(x) = (3x²)/3 = x²</code>. ¡Correcto!).<br>
+                2. <strong>Aplica la Regla de Barrow:</strong><br>
+                <code><span class="integral-symbol">∫</span><sub>1</sub><sup>3</sup> x² dx = [x³/3]<sub>1</sub><sup>3</sup> = F(3) - F(1)</code><br>
+                <code>= (3³/3) - (1³/3) = (27/3) - (1/3) = 9 - 1/3 = 26/3</code>.<br>
+                El área exacta es 26/3 unidades cuadradas.
+            </div>
+        </section>
+
+        <section id="reglas-integracion">
+            <h2>4. Herramientas Básicas: Propiedades y Fórmulas de Integración 🔧</h2>
+            <p>Al igual que con las derivadas, tenemos reglas y fórmulas para calcular integrales indefinidas (antiderivadas).</p>
+
+            <h3>Propiedades de la Integral Indefinida</h3>
+            <div class="formula"><strong>Constante Múltiple:</strong> <span class="integral-symbol">∫</span> k · f(x) <span class="dx">dx</span> = k · <span class="integral-symbol">∫</span> f(x) <span class="dx">dx</span></div>
+            <p>(Puedes sacar las constantes fuera de la integral).</p>
+
+            <div class="formula"><strong>Suma / Resta:</strong> <span class="integral-symbol">∫</span> [f(x) ± g(x)] <span class="dx">dx</span> = <span class="integral-symbol">∫</span> f(x) <span class="dx">dx</span> ± <span class="integral-symbol">∫</span> g(x) <span class="dx">dx</span></div>
+            <p>(La integral de una suma/resta es la suma/resta de las integrales).</p>
+
+            <div class="importante">
+                <p><strong>¡OJO! No existen reglas simples para la integral de un producto o un cociente</strong> como las que había para las derivadas. Integrar productos y cocientes suele requerir técnicas más avanzadas.</p>
+            </div>
+
+            <h3>Tabla de Integrales Inmediatas (Antiderivadas Básicas)</h3>
+            <p>Estas son las inversas de las reglas de derivación que ya conoces. ¡Apréndetelas!</p>
+
+            <div class="formula"><strong>Constante:</strong> <span class="integral-symbol">∫</span> k <span class="dx">dx</span> = kx + C</div>
+            <div class="ejemplo"><code><span class="integral-symbol">∫</span> 5 dx = 5x + C</code></div>
+
+            <div class="formula"><strong>Potencia (n ≠ -1):</strong> <span class="integral-symbol">∫</span> xⁿ <span class="dx">dx</span> = (xⁿ⁺¹) / (n+1) + C</div>
+            <div class="ejemplo">
+                <code><span class="integral-symbol">∫</span> x³ dx = x⁴/4 + C</code><br>
+                <code><span class="integral-symbol">∫</span> √x dx = <span class="integral-symbol">∫</span> x¹ᐟ² dx = (x³ᐟ²) / (3/2) + C = (2/3)x√x + C</code><br>
+                <code><span class="integral-symbol">∫</span> 1/x² dx = <span class="integral-symbol">∫</span> x⁻² dx = (x⁻¹) / (-1) + C = -1/x + C</code>
+            </div>
+
+            <div class="formula"><strong>Caso Especial n = -1:</strong> <span class="integral-symbol">∫</span> (1/x) <span class="dx">dx</span> = ln|x| + C</div>
+            <div class="nota">Usamos valor absoluto <code>|x|</code> porque el logaritmo solo está definido para positivos, pero <code>1/x</code> existe para <code>x<0</code>.</div>
+
+            <div class="formula"><strong>Exponencial Natural:</strong> <span class="integral-symbol">∫</span> eˣ <span class="dx">dx</span> = eˣ + C</div>
+
+            <div class="formula"><strong>Exponencial General (a > 0, a ≠ 1):</strong> <span class="integral-symbol">∫</span> aˣ <span class="dx">dx</span> = aˣ / ln(a) + C</div>
+            <div class="ejemplo"><code><span class="integral-symbol">∫</span> 2ˣ dx = 2ˣ / ln(2) + C</code></div>
+
+            <div class="formula"><strong>Seno:</strong> <span class="integral-symbol">∫</span> sen(x) <span class="dx">dx</span> = -cos(x) + C</div>
+
+            <div class="formula"><strong>Coseno:</strong> <span class="integral-symbol">∫</span> cos(x) <span class="dx">dx</span> = sen(x) + C</div>
+
+            <div class="formula"><strong>Tangente (¡No es inmediata! Requiere sustitución):</strong> <span class="integral-symbol">∫</span> tan(x) <span class="dx">dx</span> = -ln|cos(x)| + C</div>
+
+            <div class="formula"><strong>Otras Trigonométricas (Inversas de derivadas conocidas):</strong><br>
+                <span class="integral-symbol">∫</span> sec²(x) <span class="dx">dx</span> = tan(x) + C<br>
+                <span class="integral-symbol">∫</span> csc²(x) <span class="dx">dx</span> = -cot(x) + C<br>
+                <span class="integral-symbol">∫</span> sec(x)tan(x) <span class="dx">dx</span> = sec(x) + C<br>
+                <span class="integral-symbol">∫</span> csc(x)cot(x) <span class="dx">dx</span> = -csc(x) + C
+            </div>
+
+            <div class="formula"><strong>Tipo Arcoseno:</strong> <span class="integral-symbol">∫</span> 1 / √(1 - x²) <span class="dx">dx</span> = arcsen(x) + C</div>
+
+            <div class="formula"><strong>Tipo Arcotangente:</strong> <span class="integral-symbol">∫</span> 1 / (1 + x²) <span class="dx">dx</span> = arctan(x) + C</div>
+
+            <div class="importante">
+                <p><strong>¿Qué es esa "+ C"? La Constante de Integración.</strong><br>
+                La derivada de <code>x²</code> es <code>2x</code>. Pero la derivada de <code>x² + 5</code> también es <code>2x</code>, y la de <code>x² - 100</code> también es <code>2x</code>. ¡La derivada de cualquier constante es cero!<br>
+                Por eso, cuando encontramos una antiderivada <code>F(x)</code>, la solución más general es <code>F(x) + C</code>, donde <code>C</code> puede ser cualquier número constante. Representa una familia infinita de funciones paralelas verticalmente.</p>
+            </div>
+        </section>
+
+         <section id="tecnicas-integracion">
+            <h2>5. Desbloqueando Integrales: Técnicas Básicas 🗝️</h2>
+            <p>Muchas integrales no son "inmediatas" (no están en la tabla). Necesitamos técnicas para transformarlas en algo que sí sepamos integrar.</p>
+
+            <h3>Técnica 1: Integración por Sustitución (o Cambio de Variable)</h3>
+            <p>Es la <strong>inversa de la Regla de la Cadena</strong>. Se usa cuando el integrando (la función dentro de la integral) contiene una función y su derivada (o casi).</p>
+            <p><strong>Idea:</strong> Sustituir una parte de la integral por una nueva variable <code>u</code>, de forma que la derivada <code>du</code> también aparezca (o se pueda ajustar con una constante).</p>
+            <div class="formula">Si tienes <span class="integral-symbol">∫</span> f(g(x)) · g'(x) <span class="dx">dx</span>, haz <code>u = g(x)</code>.<br>Entonces <code>du = g'(x) dx</code>.<br>La integral se convierte en <span class="integral-symbol">∫</span> f(u) <span class="dx">du</span>, que puede ser más fácil.</div>
+
+            <div class="ejemplo">
+                Calcular <code><span class="integral-symbol">∫</span> 2x cos(x²) dx</code>.<br>
+                Vemos <code>x²</code> y su derivada <code>2x</code>.<br>
+                1. <strong>Sustitución:</strong> Sea <code>u = x²</code>.<br>
+                2. <strong>Diferencial:</strong> <code>du = 2x dx</code>.<br>
+                3. <strong>Reescribir la integral:</strong> La integral es exactamente <code><span class="integral-symbol">∫</span> cos(u) du</code>.<br>
+                4. <strong>Integrar respecto a u:</strong> <code><span class="integral-symbol">∫</span> cos(u) du = sen(u) + C</code>.<br>
+                5. <strong>Deshacer la sustitución (volver a x):</strong> <code>sen(x²) + C</code>.
+            </div>
+            <div class="ejemplo">
+                Calcular <code><span class="integral-symbol">∫</span> (x + 1)⁴ dx</code>.<br>
+                1. <strong>Sustitución:</strong> Sea <code>u = x + 1</code>.<br>
+                2. <strong>Diferencial:</strong> <code>du = 1 dx = dx</code>.<br>
+                3. <strong>Reescribir:</strong> <code><span class="integral-symbol">∫</span> u⁴ du</code>.<br>
+                4. <strong>Integrar:</strong> <code>u⁵ / 5 + C</code>.<br>
+                5. <strong>Deshacer:</strong> <code>(x + 1)⁵ / 5 + C</code>.
+            </div>
+             <div class="nota">A veces falta una constante para completar el <code>du</code>. Puedes "introducirla" multiplicando y dividiendo. Ejemplo: <code><span class="integral-symbol">∫</span> x e^(x²) dx</code>. Hacemos <code>u=x²</code>, <code>du=2x dx</code>. Nos falta un 2. Escribimos: <code>(1/2) <span class="integral-symbol">∫</span> 2x e^(x²) dx = (1/2) <span class="integral-symbol">∫</span> e^u du = (1/2) e^u + C = (1/2) e^(x²) + C</code>.</div>
+
+            <h3>Técnica 2: Integración por Partes</h3>
+            <p>Es la <strong>inversa de la Regla del Producto</strong>. Se usa típicamente para integrar productos de funciones de tipos diferentes (polinómica por exponencial, polinómica por trigonométrica, logaritmo, etc.).</p>
+            <p>La famosa fórmula (¡aprèndetela!):</p>
+            <div class="formula">
+                <span class="integral-symbol">∫</span> u <span class="dx">dv</span> = u · v - <span class="integral-symbol">∫</span> v <span class="dx">du</span>
+            </div>
+            <p><strong>Idea:</strong> Dividir el integrando original en dos partes: <code>u</code> (algo que se simplifique al derivar) y <code>dv</code> (algo que sepamos integrar fácilmente). Luego calcular <code>du</code> (derivando <code>u</code>) y <code>v</code> (integrando <code>dv</code>) y aplicar la fórmula.</p>
+            <div class="nota">
+                <p><strong>¿Cómo elegir <code>u</code> y <code>dv</code>?</strong> Una regla nemotécnica útil es <strong>LIATE</strong> o <strong>ILATE</strong>:</p>
+                <ul>
+                    <li><strong>L</strong>ogarítmicas</li>
+                    <li><strong>I</strong>nversas trigonométricas</li>
+                    <li><strong>A</strong>lgebraicas (polinomios)</li>
+                    <li><strong>T</strong>rigonométricas (sen, cos)</li>
+                    <li><strong>E</strong>xponenciales</li>
+                </ul>
+                Elige <code>u</code> como la función que aparezca primero en esta lista en tu integrando. El resto será <code>dv</code>.
+            </div>
+
+            <div class="ejemplo">
+                Calcular <code><span class="integral-symbol">∫</span> x eˣ dx</code>. (Producto de Algebraica x Exponencial)<br>
+                1. <strong>Elegir u y dv (LIATE):</strong> <code>u = x</code> (Algebraica), <code>dv = eˣ dx</code> (Exponencial).<br>
+                2. <strong>Calcular du y v:</strong>
+                   <code>du = dx</code> (derivando u).
+                   <code>v = <span class="integral-symbol">∫</span> eˣ dx = eˣ</code> (integrando dv).<br>
+                3. <strong>Aplicar la fórmula <span class="integral-symbol">∫</span> u dv = uv - <span class="integral-symbol">∫</span> v du:</strong><br>
+                   <code><span class="integral-symbol">∫</span> x eˣ dx = x · eˣ - <span class="integral-symbol">∫</span> eˣ dx</code>.<br>
+                4. <strong>Resolver la integral restante:</strong>
+                   <code>= x eˣ - eˣ + C</code>.<br>
+                   (Opcional: Factorizar) <code>= eˣ(x - 1) + C</code>.
+            </div>
+             <div class="ejemplo">
+                Calcular <code><span class="integral-symbol">∫</span> ln(x) dx</code>. (Parece que no hay producto, pero sí: <code>1 · ln(x)</code>)<br>
+                1. <strong>Elegir u y dv (LIATE):</strong> <code>u = ln(x)</code> (Logarítmica), <code>dv = 1 dx</code> (Algebraica).<br>
+                2. <strong>Calcular du y v:</strong>
+                   <code>du = (1/x) dx</code>.
+                   <code>v = <span class="integral-symbol">∫</span> 1 dx = x</code>.<br>
+                3. <strong>Aplicar la fórmula:</strong><br>
+                   <code><span class="integral-symbol">∫</span> ln(x) dx = ln(x) · x - <span class="integral-symbol">∫</span> x · (1/x) dx</code>.<br>
+                4. <strong>Resolver la integral restante:</strong>
+                   <code>= x ln(x) - <span class="integral-symbol">∫</span> 1 dx</code><br>
+                   <code>= x ln(x) - x + C</code>.
+            </div>
+        </section>
+
+        <section id="resumen">
+            <h2>6. Resumen y ¡A Integrar! 🚀</h2>
+            <p>¡Has completado el viaje introductorio al mundo de las integrales! Repasemos los puntos clave:</p>
+            <ul>
+                <li><strong>Qué es:</strong> La operación inversa a la derivación (antiderivada o integral indefinida) y una forma de calcular áreas bajo curvas (integral definida).</li>
+                <li><strong>Teorema Fundamental del Cálculo:</strong> El puente que conecta derivadas e integrales, permitiendo calcular áreas mediante antiderivadas (Regla de Barrow: <code>∫[a,b] f(x) dx = F(b) - F(a)</code>).</li>
+                <li><strong>Constante de Integración (+C):</strong> Siempre aparece en las integrales indefinidas porque la derivada de una constante es cero.</li>
+                <li><strong>Integrales Inmediatas:</strong> Fórmulas básicas que se obtienen invirtiendo las reglas de derivación.</li>
+                <li><strong>Técnicas Básicas:</strong>
+                    <ul>
+                        <li><strong>Sustitución:</strong> Inversa de la regla de la cadena (buscar <code>f(g(x))g'(x)</code>).</li>
+                        <li><strong>Por Partes:</strong> Inversa de la regla del producto (<code>∫ u dv = uv - ∫ v du</code>, usar LIATE).</li>
+                    </ul>
+                </li>
+                <li><strong>¡No hay reglas simples para productos/cocientes!</strong></li>
+            </ul>
+            <p>Las integrales son fundamentales en muchísimas áreas: calcular áreas, volúmenes, longitudes de curva, trabajo en física, probabilidad, estadística, economía y mucho más.</p>
+            <div class="importante">
+                <p><strong>La Práctica Hace al Maestro Integrador:</strong> Integrar requiere reconocer patrones y elegir la técnica adecuada. La única forma de mejorar es resolver muchos ejercicios diferentes. Empieza por las inmediatas, luego sustitución y partes. ¡La práctica te dará la intuición!</p>
+            </div>
+            <p class="text-center" style="font-size:1.5em; color: var(--color-verde);"><strong>¡Ánimo con esas integrales! 💪</strong></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Guía Completa de Integrales para 1º de Bachillerato</p>
+        <p>Creada con ayuda de IA - ¡Verifica siempre los conceptos!</p>
+    </footer>
+</body>
+</html>

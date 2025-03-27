@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Estadística Continua</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Estilos generales (Adaptados de index.html) */
+        :root {
+            --color-primario: #3498db;       /* Azul claro */
+            --color-secundario: #2980b9;    /* Azul más oscuro */
+            --color-acento: #e74c3c;        /* Rojo/Naranja para énfasis */
+            --color-verde: #2ecc71;         /* Verde para éxito/positividad */
+            --color-amarillo: #f1c40f;     /* Amarillo para notas */
+            --color-fondo: #f9f9f9;         /* Fondo general muy claro */
+            --color-texto: #333;           /* Texto principal oscuro */
+            --color-borde: #ddd;           /* Bordes suaves */
+            --sombra: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--color-texto);
+            background-color: var(--color-fondo);
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff; /* Fondo blanco para el contenido principal */
+            box-shadow: var(--sombra);
+            border-radius: 8px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Encabezados */
+        header {
+            background-color: var(--color-secundario); /* Azul oscuro para esta página */
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin: -20px -20px 30px -20px; /* Ajusta para que cubra el padding del contenedor */
+        }
+
+        h1 { /* Estilo para el H1 del header */
+            margin: 0;
+            font-size: 2.5em;
+        }
+         /* Estilo para el H1 dentro del main (si se usa) */
+         main h1 {
+             color: var(--color-secundario);
+             border-bottom: 2px solid var(--color-secundario);
+             padding-bottom: 8px;
+             margin-top: 40px;
+             font-size: 2em; /* Ligeramente más pequeño que el del header */
+         }
+
+
+        h2 {
+            color: var(--color-secundario);
+            border-bottom: 2px solid var(--color-secundario);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: var(--color-primario); /* Usar primario para H3 */
+            margin-top: 30px;
+            font-size: 1.4em;
+        }
+         h4 {
+            color: var(--color-secundario); /* Usar secundario para H4 */
+            margin-top: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Elementos de contenido */
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .nota {
+            background-color: rgba(241, 196, 15, 0.1); /* Amarillo nota */
+            border-left: 4px solid var(--color-amarillo);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .ejemplo {
+            background-color: rgba(46, 204, 113, 0.1); /* Verde ejemplo (como en derivadas) */
+            border: 1px solid var(--color-verde);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+         .ejemplo code { /* Mejorar el estilo del código en ejemplos */
+             background-color: rgba(46, 204, 113, 0.2);
+             padding: 3px 6px;
+         }
+
+        .importante {
+            background-color: rgba(231, 76, 60, 0.1); /* Rojo importante */
+            border-left: 4px solid var(--color-acento);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+            font-weight: bold;
+        }
+
+        /* Listas */
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 30px; /* Más indentación */
+        }
+
+        li {
+            margin-bottom: 10px; /* Más espacio entre items */
+        }
+
+        /* Fórmulas y código matemático */
+         code {
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em;
+        }
+
+        .formula {
+            /* font-family: 'Cambria Math', Times, serif; */ /* MathJax maneja la fuente */
+            font-size: 1.1em; /* Ajustar tamaño si es necesario */
+            text-align: center;
+            margin: 25px auto;
+            padding: 15px;
+            background-color: #eaf2f8; /* Fondo azul muy claro para fórmulas (como en derivadas) */
+            border: 1px solid var(--color-primario);
+            border-radius: 5px;
+            display: block; /* Asegura que ocupe su propio espacio */
+            max-width: 90%; /* Ajustar ancho si es necesario */
+            box-shadow: var(--sombra);
+            overflow-x: auto; /* Para fórmulas largas */
+        }
+         .formula strong { /* Resaltar nombres de reglas */
+             color: var(--color-secundario);
+         }
+
+        /* Gráficos (si se añaden) */
+        .grafico {
+            background-color: white;
+            border: 1px solid var(--color-borde);
+            border-radius: 5px;
+            box-shadow: var(--sombra);
+            padding: 20px;
+            margin: 30px auto;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .grafico svg {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .grafico-titulo {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--color-secundario);
+            font-size: 1.1em;
+        }
+
+        .grafico-descripcion {
+            font-size: 0.95em;
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: var(--color-secundario); /* Usar secundario para footer */
+            color: white;
+            border-radius: 0 0 8px 8px;
+             margin: 30px -20px -20px -20px; /* Ajusta para que cubra el padding del contenedor */
+        }
+        footer p {
+             margin-bottom: 5px;
+        }
+
+        /* Utilidades */
+        .text-center { text-align: center; }
+        .math { font-family: 'Cambria Math', Times, serif; font-style: italic; } /* Para símbolos matemáticos sueltos */
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Guía de Estadística Continua</h1>
+        <p>Variables Aleatorias, Funciones de Densidad y Distribución</p>
+    </header>
+
+    <main class="contenedor">
+        <h1>Estadística Continua: Variables Aleatorias Continuas</h1>
+
+        <p>
+            A diferencia de las variables aleatorias discretas, que toman valores específicos (como el número de caras al lanzar una moneda), las variables aleatorias continuas pueden tomar cualquier valor dentro de un intervalo. Ejemplos comunes incluyen la altura de una persona, la temperatura o el tiempo de espera.
+        </p>
+
+        <h2>Función de Densidad de Probabilidad (PDF)</h2>
+    <p>
+        Para una variable aleatoria continua \(X\), no hablamos de la probabilidad de que tome un valor exacto (esta probabilidad es siempre cero, \(P(X=x)=0\)), sino de la probabilidad de que caiga dentro de un intervalo. Esto se describe mediante la <strong>Función de Densidad de Probabilidad</strong> (PDF), denotada como \(f_X(x)\).
+    </p>
+    <p>La PDF debe cumplir dos condiciones:</p>
+    <ol>
+        <li>\(f_X(x) \ge 0\) para todo \(x\).</li>
+        <li>El área total bajo la curva de la PDF debe ser 1: \(\int_{-\infty}^{\infty} f_X(x) dx = 1\).</li>
+    </ol>
+    <p>
+        La probabilidad de que \(X\) tome un valor en el intervalo \([a, b]\) se calcula integrando la PDF en ese intervalo:
+    </p>
+    <div class="formula">
+        \[ P(a \le X \le b) = \int_{a}^{b} f_X(x) dx \]
+    </div>
+
+    <div class="ejemplo">
+        <h3>Ejemplo (Adaptado de Ejercicio 2.1)</h3>
+        <p>Sea \(X\) una variable aleatoria con PDF:</p>
+        <div class="formula">
+        \[ f_X(x) = \begin{cases} \frac{1}{6}(x+1) & \text{si } 1 < x < 3 \\ 0 & \text{en otro caso} \end{cases} \]
+        </div>
+        <p>Para calcular \(P(1 < X < 2.5)\):</p>
+        <div class="formula">
+        \[ P(1 < X < 5/2) = \int_{1}^{5/2} \frac{1}{6}(x+1) dx = \frac{1}{6} \left[ \frac{x^2}{2} + x \right]_{1}^{5/2} \]
+        \[ = \frac{1}{6} \left( \left(\frac{(5/2)^2}{2} + \frac{5}{2}\right) - \left(\frac{1^2}{2} + 1\right) \right) = \frac{1}{6} \left( \frac{25}{8} + \frac{5}{2} - \frac{1}{2} - 1 \right) = \frac{1}{6} \left( \frac{25+20-4-8}{8} \right) = \frac{33}{48} = \frac{11}{16} \]
+        </div>
+         <small>(Nota: El cálculo original en el texto tenía un pequeño error, aquí se presenta corregido).</small>
+    </div>
+
+    <h2>Función de Distribución Acumulada (CDF)</h2>
+    <p>
+        La <strong>Función de Distribución Acumulada</strong> (CDF), denotada como \(F_X(x)\), da la probabilidad de que la variable aleatoria \(X\) sea menor o igual a un valor específico \(x\).
+    </p>
+    <div class="formula">
+        \[ F_X(x) = P(X \le x) = \int_{-\infty}^{x} f_X(t) dt \]
+    </div>
+    <p>Propiedades de la CDF:</p>
+    <ul>
+        <li>Es no decreciente: si \(a < b\), entonces \(F_X(a) \le F_X(b)\).</li>
+        <li>\(\lim_{x \to -\infty} F_X(x) = 0\)</li>
+        <li>\(\lim_{x \to \infty} F_X(x) = 1\)</li>
+        <li>Es continua por la derecha (y en el caso continuo, es totalmente continua).</li>
+    </ul>
+    <p>Podemos obtener la PDF derivando la CDF: \(f_X(x) = \frac{d}{dx} F_X(x)\).</p>
+    <p>La probabilidad en un intervalo también se puede calcular usando la CDF:</p>
+    <div class="formula">
+        \[ P(a < X \le b) = F_X(b) - F_X(a) \]
+    </div>
+
+    <div class="ejemplo">
+        <h3>Ejemplo (Adaptado de Ejercicio 2.3)</h3>
+        <p>Sea \(X\) una variable aleatoria con CDF:</p>
+        <div class="formula">
+        \[ F_X(x) = \begin{cases} 0 & \text{si } x < 0 \\ x^3 & \text{si } 0 \le x < 1 \\ 1 & \text{si } x \ge 1 \end{cases} \]
+        </div>
+        <p>Esta función cumple las propiedades de una CDF. La PDF se obtiene derivando:</p>
+        <div class="formula">
+        \[ f_X(x) = F'_X(x) = \begin{cases} 3x^2 & \text{si } 0 < x < 1 \\ 0 & \text{en otro caso} \end{cases} \]
+        </div>
+        <p>Calcular \(P(1/4 < X < 1/2)\):</p>
+        <div class="formula">
+        \[ P(1/4 < X < 1/2) = F_X(1/2) - F_X(1/4) = (1/2)^3 - (1/4)^3 = \frac{1}{8} - \frac{1}{64} = \frac{8-1}{64} = \frac{7}{64} \]
+        </div>
+    </div>
+
+    <h2>Probabilidad Condicionada</h2>
+    <p>
+        La probabilidad condicionada \(P(A|B)\) se define como la probabilidad de que ocurra el suceso A, sabiendo que ha ocurrido el suceso B. Para variables continuas, si \(A = \{X \in I_A\}\) y \(B = \{X \in I_B\}\), donde \(I_A\) e \(I_B\) son intervalos o conjuntos de valores:
+    </p>
+    <div class="formula">
+        \[ P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{P(X \in I_A \cap I_B)}{P(X \in I_B)} \]
+    </div>
+    <p>Donde \(P(B)\) debe ser mayor que cero.</p>
+
+    <div class="ejemplo">
+        <h3>Ejemplo (Adaptado de Ejercicio 2.2)</h3>
+        <p>Sea \(X\) con PDF \(f_X(x) = \frac{1}{2}(x-1)\) si \(1 < x < 3\), y 0 en otro caso. Sean \(A = \{X > 5/4\}\) y \(B = \{X < 5/2\}\). Calcular \(P(A|B)\).</p>
+        <p>Necesitamos \(P(A \cap B) = P(5/4 < X < 5/2)\) y \(P(B) = P(1 < X < 5/2)\) (ya que la PDF es 0 para \(x \le 1\)).</p>
+        <div class="formula">
+        \[ P(A \cap B) = \int_{5/4}^{5/2} \frac{1}{2}(x-1) dx = \left[ \frac{1}{4}(x-1)^2 \right]_{5/4}^{5/2} = \frac{1}{4} \left( (\frac{3}{2})^2 - (\frac{1}{4})^2 \right) = \frac{1}{4} \left( \frac{9}{4} - \frac{1}{16} \right) = \frac{1}{4} \left( \frac{36-1}{16} \right) = \frac{35}{64} \]
+        \[ P(B) = \int_{1}^{5/2} \frac{1}{2}(x-1) dx = \left[ \frac{1}{4}(x-1)^2 \right]_{1}^{5/2} = \frac{1}{4} \left( (\frac{3}{2})^2 - (0)^2 \right) = \frac{1}{4} \cdot \frac{9}{4} = \frac{9}{16} = \frac{36}{64} \]
+        \[ P(A | B) = \frac{35/64}{36/64} = \frac{35}{36} \]
+        </div>
+    </div>
+
+    <h2>Valor Esperado (Esperanza Matemática)</h2>
+    <p>
+        El valor esperado o media de una variable aleatoria continua \(X\), denotado como \(E[X]\) o \(\mu\), representa el valor promedio que tomaría \(X\) si repitiéramos el experimento muchas veces.
+    </p>
+    <div class="formula">
+        \[ E[X] = \int_{-\infty}^{\infty} x f_X(x) dx \]
+    </div>
+    <p>Para una función \(g(X)\) de la variable aleatoria \(X\), el valor esperado es:</p>
+    <div class="formula">
+        \[ E[g(X)] = \int_{-\infty}^{\infty} g(x) f_X(x) dx \]
+    </div>
+    <p>Una propiedad importante es la linealidad de la esperanza: \(E[aX + b] = aE[X] + b\).</p>
+
+    <div class="ejemplo">
+        <h3>Ejemplo (Adaptado de Ejercicio 2.4)</h3>
+        <p>Sea \(X\) con PDF \(f_X(x) = 4(1-x)^3\) si \(0 \le x < 1\), y 0 en otro caso. Calcular \(E[X]\).</p>
+        <div class="formula">
+        \[ E[X] = \int_{0}^{1} x \cdot 4(1-x)^3 dx \]
+        </div>
+        <p>Se puede resolver por partes o desarrollando \((1-x)^3\). El resultado es:</p>
+        <div class="formula">
+        \[ E[X] = \frac{1}{5} \]
+        </div>
+        <h3>Ejemplo (Adaptado de Ejercicio 2.7)</h3>
+        <p>Sea \(X\) con PDF \(f_X(x) = 2x\) si \(0 < x \le 1\), y 0 en otro caso. Calcular \(E[X^2+1]\).</p>
+        <div class="formula">
+        \[ E[X^2+1] = \int_{0}^{1} (x^2+1) \cdot 2x dx = \int_{0}^{1} (2x^3 + 2x) dx = \left[ \frac{2x^4}{4} + \frac{2x^2}{2} \right]_{0}^{1} = \left[ \frac{x^4}{2} + x^2 \right]_{0}^{1} = \frac{1}{2} + 1 = \frac{3}{2} \]
+        </div>
+        <p>Alternativamente, \(E[X^2+1] = E[X^2] + 1\). Calculamos \(E[X^2] = \int_{0}^{1} x^2 \cdot 2x dx = \int_{0}^{1} 2x^3 dx = [\frac{2x^4}{4}]_0^1 = \frac{1}{2}\). Entonces \(E[X^2+1] = \frac{1}{2} + 1 = \frac{3}{2}\).</p>
+    </div>
+
+    <h2>Transformaciones de Variables Aleatorias</h2>
+    <p>
+        Si tenemos una variable aleatoria \(X\) con PDF \(f_X(x)\) y creamos una nueva variable \(Y = g(X)\), ¿cuál es la PDF de \(Y\), \(f_Y(y)\)?
+    </p>
+    <p>Un método general es encontrar primero la CDF de \(Y\), \(F_Y(y) = P(Y \le y) = P(g(X) \le y)\), expresando la condición en términos de \(X\), y luego derivar para obtener \(f_Y(y)\).</p>
+
+    <div class="ejemplo">
+        <h3>Ejemplo (Adaptado de Ejercicio 2.16)</h3>
+        <p>Sea \(X\) con PDF \(f_X(x) = x/8\) si \(0 \le x \le 4\), y 0 en otro caso. Sea \(Y = \sqrt{X}\). Hallar \(f_Y(y)\).</p>
+        <p>Como \(X\) varía entre 0 y 4, \(Y = \sqrt{X}\) varía entre 0 y 2.</p>
+        <p>Para \(0 \le y \le 2\):</p>
+        <div class="formula">
+        \[ F_Y(y) = P(Y \le y) = P(\sqrt{X} \le y) = P(X \le y^2) \]
+        \[ = \int_{0}^{y^2} \frac{x}{8} dx = \left[ \frac{x^2}{16} \right]_{0}^{y^2} = \frac{(y^2)^2}{16} = \frac{y^4}{16} \]
+        </div>
+        <p>La CDF completa es:</p>
+        <div class="formula">
+        \[ F_Y(y) = \begin{cases} 0 & \text{si } y < 0 \\ y^4/16 & \text{si } 0 \le y \le 2 \\ 1 & \text{si } y > 2 \end{cases} \]
+        </div>
+        <p>Derivando para obtener la PDF:</p>
+        <div class="formula">
+        \[ f_Y(y) = F'_Y(y) = \begin{cases} \frac{4y^3}{16} = \frac{y^3}{4} & \text{si } 0 < y < 2 \\ 0 & \text{en otro caso} \end{cases} \]
+        </div>
+         <small>(Nota: El texto original tenía \(1/4 y^3\) en el intervalo \(0 \le y \le 2\), lo cual es correcto).</small>
+    </div>
+
+    <h2>Distribución Normal</h2>
+    <p>
+        Una de las distribuciones continuas más importantes es la Distribución Normal (o Gaussiana), denotada como \(X \sim N(\mu, \sigma^2)\), donde \(\mu\) es la media y \(\sigma^2\) es la varianza (\(\sigma\) es la desviación típica).
+    </p>
+    <p>Su PDF es:</p>
+    <div class="formula">
+        \[ f(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} \]
+    </div>
+    <p>
+        Como la integral de esta función no tiene una primitiva elemental, los cálculos de probabilidad se realizan mediante la <strong>tipificación</strong> (o estandarización) de la variable. Se transforma \(X\) en una variable \(Z\) con distribución normal estándar \(N(0, 1)\):
+    </p>
+    <div class="formula">
+        \[ Z = \frac{X - \mu}{\sigma} \]
+    </div>
+    <p>
+        Las probabilidades para \(Z\) se encuentran en tablas estándar o se calculan con software. La CDF de \(Z\) se suele denotar como \(\Phi(z)\).
+    </p>
+    <p>Propiedades útiles:</p>
+    <ul>
+        <li>\(P(X \le a) = P\left(Z \le \frac{a-\mu}{\sigma}\right) = \Phi\left(\frac{a-\mu}{\sigma}\right)\)</li>
+        <li>\(P(X > a) = 1 - P(X \le a) = 1 - \Phi\left(\frac{a-\mu}{\sigma}\right)\)</li>
+        <li>\(P(a < X \le b) = P\left(\frac{a-\mu}{\sigma} < Z \le \frac{b-\mu}{\sigma}\right) = \Phi\left(\frac{b-\mu}{\sigma}\right) - \Phi\left(\frac{a-\mu}{\sigma}\right)\)</li>
+        <li>Por simetría de \(N(0,1)\): \(\Phi(-z) = 1 - \Phi(z)\)</li>
+    </ul>
+
+    <div class="ejemplo">
+        <h3>Ejemplo (Adaptado de Ejercicio 2.6)</h3>
+        <p>Sea \(X \sim N(1, 4)\) (media \(\mu=1\), varianza \(\sigma^2=4\), desviación típica \(\sigma=2\)). Calcular \(P(X > 2 | X < 3)\).</p>
+        <div class="formula">
+        \[ P(X > 2 | X < 3) = \frac{P(2 < X < 3)}{P(X < 3)} \]
+        </div>
+        <p>Tipificamos:</p>
+        <div class="formula">
+        \[ P(X < 3) = P\left(\frac{X-1}{2} < \frac{3-1}{2}\right) = P(Z < 1) = \Phi(1) \]
+        \[ P(2 < X < 3) = P\left(\frac{2-1}{2} < \frac{X-1}{2} < \frac{3-1}{2}\right) = P(0.5 < Z < 1) = \Phi(1) - \Phi(0.5) \]
+        </div>
+        <p>Usando valores típicos de la tabla normal estándar (\(\Phi(1) \approx 0.8413\), \(\Phi(0.5) \approx 0.6915\)):</p>
+        <div class="formula">
+        \[ P(X < 3) \approx 0.8413 \]
+        \[ P(2 < X < 3) \approx 0.8413 - 0.6915 = 0.1498 \]
+        \[ P(X > 2 | X < 3) \approx \frac{0.1498}{0.8413} \approx 0.1781 \]
+        </div>
+    </div>
+
+    </main>
+
+    <footer>
+        <p>Guía de Estadística Continua</p>
+        <p>Basada en ejercicios de Estadística I - UNED</p>
+    </footer>
+</body>
+</html>
