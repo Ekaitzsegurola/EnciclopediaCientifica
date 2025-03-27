@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa de Derivadas - 1º Bachillerato</title>
+    <style>
+        /* Estilos generales */
+        :root {
+            --color-primario: #3498db;       /* Azul claro */
+            --color-secundario: #2980b9;    /* Azul más oscuro */
+            --color-acento: #e74c3c;        /* Rojo/Naranja para énfasis */
+            --color-verde: #2ecc71;         /* Verde para éxito/positividad */
+            --color-amarillo: #f1c40f;     /* Amarillo para notas */
+            --color-fondo: #f9f9f9;         /* Fondo general muy claro */
+            --color-texto: #333;           /* Texto principal oscuro */
+            --color-borde: #ddd;           /* Bordes suaves */
+            --sombra: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--color-texto);
+            background-color: var(--color-fondo);
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff; /* Fondo blanco para el contenido principal */
+            box-shadow: var(--sombra);
+            border-radius: 8px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Encabezados */
+        header {
+            background-color: var(--color-primario);
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin: -20px -20px 30px -20px; /* Ajusta para que cubra el padding del contenedor */
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: var(--color-secundario);
+            border-bottom: 2px solid var(--color-secundario);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: var(--color-primario); /* Usar primario para H3 */
+            margin-top: 30px;
+            font-size: 1.4em;
+        }
+         h4 {
+            color: var(--color-secundario); /* Usar secundario para H4 */
+            margin-top: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Elementos de contenido */
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .nota {
+            background-color: rgba(241, 196, 15, 0.1); /* Amarillo nota */
+            border-left: 4px solid var(--color-amarillo);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .ejemplo {
+            background-color: rgba(46, 204, 113, 0.1); /* Verde ejemplo */
+            border: 1px solid var(--color-verde);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+         .ejemplo code { /* Mejorar el estilo del código en ejemplos */
+             background-color: rgba(46, 204, 113, 0.2);
+             padding: 3px 6px;
+         }
+
+        .importante {
+            background-color: rgba(231, 76, 60, 0.1); /* Rojo importante */
+            border-left: 4px solid var(--color-acento);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+            font-weight: bold;
+        }
+
+        /* Listas */
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 30px; /* Más indentación */
+        }
+
+        li {
+            margin-bottom: 10px; /* Más espacio entre items */
+        }
+
+        /* Fórmulas y código matemático */
+         code {
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em;
+        }
+
+        .formula {
+            font-family: 'Cambria Math', Times, serif;
+            /* font-style: italic; */ /* No siempre es itálica */
+            font-size: 1.2em;
+            text-align: center;
+            margin: 25px auto;
+            padding: 15px;
+            background-color: #eaf2f8; /* Fondo azul muy claro para fórmulas */
+            border: 1px solid var(--color-primario);
+            border-radius: 5px;
+            display: block; /* Asegura que ocupe su propio espacio */
+            max-width: 80%; /* Limita el ancho para mejor lectura */
+            box-shadow: var(--sombra);
+        }
+         .formula strong { /* Resaltar nombres de reglas */
+             color: var(--color-secundario);
+         }
+
+        /* Gráficos */
+        .grafico {
+            background-color: white;
+            border: 1px solid var(--color-borde);
+            border-radius: 5px;
+            box-shadow: var(--sombra);
+            padding: 20px; /* Más padding */
+            margin: 30px auto; /* Más margen vertical */
+            text-align: center;
+            overflow-x: auto; /* Permitir scroll horizontal si el SVG es muy ancho */
+        }
+
+        .grafico svg { /* Asegurar que el SVG sea responsivo */
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            display: block; /* Evita espacio extra debajo */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .grafico-titulo {
+            font-weight: bold;
+            margin-bottom: 10px; /* Más espacio */
+            color: var(--color-secundario);
+            font-size: 1.1em;
+        }
+
+        .grafico-descripcion {
+            font-size: 0.95em; /* Ligeramente más grande */
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: var(--color-secundario); /* Usar secundario para footer */
+            color: white;
+            border-radius: 0 0 8px 8px;
+             margin: 30px -20px -20px -20px; /* Ajusta para que cubra el padding del contenedor */
+        }
+        footer p {
+             margin-bottom: 5px;
+        }
+
+        /* Utilidades */
+        .text-center { text-align: center; }
+        .math { font-family: 'Cambria Math', Times, serif; font-style: italic; } /* Para símbolos matemáticos sueltos */
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Guía Completa de Derivadas</h1>
+        <p>Tu referencia esencial para 1º de Bachillerato</p>
+    </header>
+
+    <main class="contenedor">
+        <section id="introduccion">
+            <h2>1. ¿Qué Narices es una Derivada? 🤔</h2>
+            <p>¡Bienvenido/a al emocionante mundo del Cálculo! Empecemos por el principio: la <strong>derivada</strong>. Puede sonar intimidante, pero la idea básica es bastante intuitiva.</p>
+            <p>Imagina que vas en bici por una carretera con cuestas. Tu velocidad cambia constantemente. La derivada es como un "velocímetro mágico" que te dice <strong>exactamente cómo de rápido está cambiando tu posición (o cualquier otra cosa que varíe) en un instante preciso</strong>.</p>
+            <div class="nota">
+                <p><strong>Idea Central:</strong> La derivada mide el <strong>ritmo de cambio instantáneo</strong> de una función en un punto específico.</p>
+            </div>
+            <h4>Analogía: Velocidad media vs. Velocidad instantánea</h4>
+            <p>Si haces un viaje de 180 km en 3 horas, tu velocidad media es 60 km/h. Pero seguro que no has ido a 60 km/h todo el tiempo. Has frenado, acelerado... La velocidad que marca el velocímetro en cada momento es la <em>velocidad instantánea</em>, ¡eso es como la derivada!</p>
+            <h4>La Idea Clave: Pendiente de la Curva</h4>
+            <p>Cuando dibujamos una función, obtenemos una curva. La derivada en un punto nos dice <strong>cuán inclinada está la curva en ese preciso punto</strong>. Matemáticamente, es la <strong>pendiente de la recta tangente</strong> a la curva en ese punto.</p>
+            <ul>
+                <li><strong>Derivada positiva (+):</strong> La función está "subiendo" (creciendo).</li>
+                <li><strong>Derivada negativa (-):</strong> La función está "bajando" (decreciendo).</li>
+                <li><strong>Derivada cero (0):</strong> La función está "plana" en ese instante (¡clave para máximos y mínimos!).</li>
+            </ul>
+        </section>
+
+        <section id="interpretacion-geometrica">
+            <h2>2. La Derivada como Pendiente de la Recta Tangente 📉</h2>
+            <p>Una <strong>recta tangente</strong> a una curva en un punto es una recta que "roza" la curva en ese punto, teniendo la misma dirección que la curva en ese instante.</p>
+            <div class="importante">
+                <p>El valor de la derivada de <code>f(x)</code> en <code>x = a</code>, escrito como <code>f'(a)</code>, es <strong>exactamente la pendiente (la inclinación)</strong> de la recta tangente a la gráfica de <code>y = f(x)</code> en el punto <code>(a, f(a))</code>.</p>
+            </div>
+
+            <div class="grafico">
+                <div class="grafico-titulo">Visual 1: Interpretación Geométrica de la Derivada</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="500" height="375">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                        </marker>
+                    </defs>
+                    {/* <!-- Ejes --> */}
+                    <line x1="20" y1="280" x2="380" y2="280" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)" />
+                    <line x1="50" y1="280" x2="50" y2="20" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)" />
+                    <text x="370" y="295" font-family="Arial" font-size="14">x</text>
+                    <text x="30" y="35" font-family="Arial" font-size="14">y</text>
+                    <text x="35" y="295" font-family="Arial" font-size="12">0</text>
+
+                     {/* <!-- Marcas Ejes --> */}
+                    <line x1="150" y1="277" x2="150" y2="283" stroke="#333" stroke-width="1" />
+                    <text x="150" y="295" font-family="Arial" font-size="12" text-anchor="middle">a</text>
+                    <line x1="47" y1="180" x2="53" y2="180" stroke="#333" stroke-width="1" />
+                    <text x="35" y="185" font-family="Arial" font-size="12" text-anchor="end">f(a)</text>
+
+                    {/* <!-- Curva (Parábola simple) --> */}
+                    <path d="M 50 280 Q 150 50 350 280" fill="none" stroke="var(--color-primario)" stroke-width="3" />
+                    <text x="280" y="100" font-family="Arial" font-size="14" fill="var(--color-primario)">y = f(x)</text>
+
+                    {/* <!-- Punto (a, f(a)) --> */}
+                    <circle cx="150" cy="180" r="5" fill="var(--color-acento)" />
+                    <text x="160" y="175" font-family="Arial" font-size="12" font-weight="bold">P(a, f(a))</text>
+                    <line x1="150" y1="280" x2="150" y2="180" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3" />
+                    <line x1="50" y1="180" x2="150" y2="180" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3" />
+
+
+                    {/* <!-- Recta Tangente --> */}
+                    <line x1="50" y1="280" x2="250" y2="80" stroke="var(--color-verde)" stroke-width="2" stroke-dasharray="5,3" />
+                     <text x="255" y="80" font-family="Arial" font-size="12" fill="var(--color-verde)" font-weight="bold">Recta Tangente</text>
+
+                    {/* <!-- Indicación de la pendiente --> */}
+                    <path d="M 170 180 L 200 180 L 200 150" fill="none" stroke="var(--color-acento)" stroke-width="1.5" />
+                    <text x="205" y="165" font-family="Arial" font-size="14" fill="var(--color-acento)" font-weight="bold">Pendiente = m = f'(a)</text>
+                </svg>
+                <div class="grafico-descripcion">Figura 1: La derivada f'(a) es la pendiente de la recta que toca la curva f(x) en el punto x=a.</div>
+            </div>
+        </section>
+
+        <section id="reglas-derivacion">
+            <h2>3. ¡La Caja de Herramientas! Reglas de Derivación 🛠️</h2>
+            <p>Calcular derivadas usando la definición formal (con límites) es largo. Por suerte, tenemos reglas que simplifican enormemente el proceso. ¡Apréndetelas bien!</p>
+
+            <h3>Reglas Fundamentales</h3>
+            <div class="formula"><strong>Constante:</strong> Si <code>f(x) = k</code> (<code>k</code> es un número), entonces <code>f'(x) = 0</code></div>
+            <div class="ejemplo"><code>f(x) = 8</code>  =>  <code>f'(x) = 0</code></div>
+
+            <div class="formula"><strong>Identidad:</strong> Si <code>f(x) = x</code>, entonces <code>f'(x) = 1</code></div>
+
+            <div class="formula"><strong>Potencia:</strong> Si <code>f(x) = xⁿ</code> (<code>n</code> es cualquier número real), entonces <code>f'(x) = n · xⁿ⁻¹</code></div>
+            <div class="ejemplo">
+                <code>f(x) = x⁵</code>  =>  <code>f'(x) = 5x⁴</code><br>
+                <code>g(x) = √x = x¹ᐟ²</code> => <code>g'(x) = ½ x⁻¹ᐟ² = 1 / (2√x)</code><br>
+                <code>h(x) = 1/x³ = x⁻³</code> => <code>h'(x) = -3x⁻⁴ = -3 / x⁴</code>
+            </div>
+
+            <div class="formula"><strong>Constante por Función:</strong> <code>(k · f(x))' = k · f'(x)</code></div>
+            <div class="ejemplo"><code>f(x) = 6x⁷</code> => <code>f'(x) = 6 · (7x⁶) = 42x⁶</code></div>
+
+            <div class="formula"><strong>Suma / Resta:</strong> <code>(f(x) ± g(x))' = f'(x) ± g'(x)</code></div>
+            <div class="ejemplo"><code>f(x) = x³ - 4x² + 7x - 2</code> => <code>f'(x) = 3x² - 8x + 7</code></div>
+
+            <h3>Reglas para Operaciones Más Complejas (¡Muy Importantes!)</h3>
+
+            <h4>Regla del Producto: <code>(u · v)' = u'v + uv'</code></h4>
+            <p>Se usa cuando tienes <strong>dos funciones que se multiplican</strong>.</p>
+            <div class="formula"><strong>Producto:</strong> <code>(f(x) · g(x))' = f'(x)g(x) + f(x)g'(x)</code><br>(Derivada del primero por el segundo SIN derivar + Primero SIN derivar por derivada del segundo)</div>
+            <div class="ejemplo">
+                Calcular la derivada de <code>h(x) = x² · sen(x)</code>.<br>
+                Identificamos: <code>f(x) = x²</code> (=> <code>f'(x) = 2x</code>) y <code>g(x) = sen(x)</code> (=> <code>g'(x) = cos(x)</code>).<br>
+                Aplicamos la regla: <code>h'(x) = (2x)(sen(x)) + (x²)(cos(x)) = 2x sen(x) + x² cos(x)</code>.
+            </div>
+
+            <h4>Regla del Cociente: <code>(u / v)' = (u'v - uv') / v²</code></h4>
+            <p>Se usa cuando tienes una <strong>función dividida por otra</strong>.</p>
+            <div class="formula"><strong>Cociente:</strong> <code>(f(x) / g(x))' = [f'(x)g(x) - f(x)g'(x)] / [g(x)]²</code><br>(Derivada del de arriba por el de abajo SIN derivar <strong>MENOS</strong> El de arriba SIN derivar por derivada del de abajo) TODO dividido por (el de abajo al cuadrado). ¡Cuidado con el orden y el signo menos!</div>
+            <div class="ejemplo">
+                Calcular la derivada de <code>h(x) = eˣ / (x+1)</code>.<br>
+                Identificamos: <code>f(x) = eˣ</code> (=> <code>f'(x) = eˣ</code>) y <code>g(x) = x+1</code> (=> <code>g'(x) = 1</code>).<br>
+                Aplicamos la regla: <code>h'(x) = [(eˣ)(x+1) - (eˣ)(1)] / (x+1)²</code><br>
+                <code>= [eˣ(x+1 - 1)] / (x+1)² = (x eˣ) / (x+1)²</code>. (Sacando factor común <code>eˣ</code>)
+            </div>
+
+            <h4>Regla de la Cadena: <code>(f(g(x)))' = f'(g(x)) · g'(x)</code> (¡La Reina de las Reglas!)</h4>
+            <p>Se usa para <strong>funciones compuestas</strong>, es decir, una "función dentro de otra función". Piensa en muñecas rusas.</p>
+            <div class="formula"><strong>Cadena:</strong> <code>(f(g(x)))' = f'(g(x)) · g'(x)</code><br>(Derivada de la función "exterior", evaluada en la función "interior" SIN cambiar, <strong>MULTIPLICADO</strong> por la derivada de la función "interior").</div>
+
+            <div class="grafico">
+                <div class="grafico-titulo">Visual A: Concepto de la Regla de la Cadena</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200" width="500" height="200">
+                    <defs>
+                        <marker id="arrow_cadena" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                        </marker>
+                         <filter id="shadow_cadena" x="-20%" y="-20%" width="140%" height="140%">
+                           <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                           <feOffset dx="2" dy="2" result="offsetblur"/>
+                           <feMerge>
+                             <feMergeNode/>
+                             <feMergeNode in="SourceGraphic"/>
+                           </feMerge>
+                         </filter>
+                    </defs>
+
+                    {/* <!-- Entrada X --> */}
+                    <text x="30" y="105" font-size="20" font-weight="bold">x</text>
+                    <line x1="50" y1="100" x2="100" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow_cadena)" />
+
+                    {/* <!-- Caja g(x) --> */}
+                    <rect x="100" y="70" width="100" height="60" rx="10" ry="10" fill="#d6eaf8" stroke="#2980b9" stroke-width="2" filter="url(#shadow_cadena)" />
+                    <text x="150" y="105" text-anchor="middle" font-size="18" font-weight="bold">g(x)</text>
+                     <text x="150" y="130" text-anchor="middle" font-size="14" fill="#555">(Función interior)</text>
+
+                    {/* <!-- Salida u=g(x) --> */}
+                     <text x="225" y="75" font-size="18">u = g(x)</text>
+                    <line x1="200" y1="100" x2="250" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow_cadena)" />
+
+                     {/* <!-- Caja f(u) --> */}
+                    <rect x="250" y="70" width="100" height="60" rx="10" ry="10" fill="#d5f5e3" stroke="#2ecc71" stroke-width="2" filter="url(#shadow_cadena)" />
+                    <text x="300" y="105" text-anchor="middle" font-size="18" font-weight="bold">f(u)</text>
+                    <text x="300" y="130" text-anchor="middle" font-size="14" fill="#555">(Función exterior)</text>
+
+                    {/* <!-- Salida y=f(g(x)) --> */}
+                    <line x1="350" y1="100" x2="400" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow_cadena)" />
+                    <text x="410" y="105" font-size="18">y = f(g(x))</text>
+
+                    {/* <!-- Explicación Derivada --> */}
+                    <text x="250" y="170" text-anchor="middle" font-size="16" font-weight="bold">Derivada: <tspan fill="#2ecc71">f'(g(x))</tspan> ⋅ <tspan fill="#2980b9">g'(x)</tspan></text>
+                </svg>
+                <div class="grafico-descripcion">Figura A: La Regla de la Cadena descompone la derivada en la derivada de "lo de fuera" evaluada en "lo de dentro", multiplicada por la derivada de "lo de dentro".</div>
+            </div>
+            <div class="ejemplo">
+                Calcular la derivada de <code>h(x) = (x² + 5)³</code>.<br>
+                Función exterior: <code>f(u) = u³</code> (=> <code>f'(u) = 3u²</code>).<br>
+                Función interior: <code>g(x) = x² + 5</code> (=> <code>g'(x) = 2x</code>).<br>
+                Aplicamos la regla: <code>h'(x) = f'(g(x)) · g'(x) = 3(x² + 5)² · (2x) = 6x(x² + 5)²</code>.
+            </div>
+            <div class="ejemplo">
+                Calcular la derivada de <code>h(x) = cos(4x)</code>.<br>
+                Exterior: <code>f(u) = cos(u)</code> (=> <code>f'(u) = -sen(u)</code>).<br>
+                Interior: <code>g(x) = 4x</code> (=> <code>g'(x) = 4</code>).<br>
+                Aplicamos la regla: <code>h'(x) = -sen(4x) · 4 = -4 sen(4x)</code>.
+            </div>
+        </section>
+
+        <section id="trigonometria">
+            <h2>4. Un Viaje por la Trigonometría y sus Derivadas 🔄</h2>
+
+            <h3>El Círculo Mágico (Unidad): ¿De Dónde Salen Seno, Coseno y Tangente?</h3>
+            <p>La base de la trigonometría está en la <strong>circunferencia goniométrica</strong> (o círculo unidad): una circunferencia de radio 1 centrada en el origen (0,0). Si tomamos un ángulo <code>α</code> (medido desde el eje X positivo en sentido antihorario) y vemos dónde corta a la circunferencia en el punto P, sus coordenadas son precisamente <code>(cos α, sen α)</code>.</p>
+            <ul>
+                <li><code>cos(α)</code>: Coordenada X del punto P.</li>
+                <li><code>sen(α)</code>: Coordenada Y del punto P.</li>
+                <li><code>tan(α)</code>: Es la pendiente del radio OP, igual a <code>sen(α) / cos(α)</code>. También es la longitud del segmento vertical sobre la recta tangente al círculo en (1,0) hasta cortar la prolongación del radio.</li>
+            </ul>
+            <div class="grafico">
+                <div class="grafico-titulo">Visual 2: El Círculo Unidad (Goniométrico)</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -150 300 300" width="350" height="350">
+                    <defs>
+                         <marker id="arrow_trig" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+                            <polygon points="0 0, 7 2.5, 0 5" fill="#333" />
+                        </marker>
+                    </defs>
+                    {/* <!-- Ejes --> */}
+                    <line x
