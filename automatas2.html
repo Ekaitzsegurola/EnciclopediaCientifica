@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Mejorada: Teoría de Autómatas, Gramáticas y Lenguajes</title>
+    <style>
+        /* --- Variables de Diseño --- */
+        :root {
+            --color-primario: #2980b9;       /* Azul Principal */
+            --color-secundario: #34495e;    /* Azul/Gris Oscuro */
+            --color-acento: #e67e22;        /* Naranja */
+            --color-verde: #27ae60;         /* Verde */
+            --color-amarillo: #f1c40f;     /* Amarillo */
+            --color-rojo: #c0392b;          /* Rojo */
+            --color-fondo: #f4f6f7;         /* Fondo General Gris Claro */
+            --color-contenido-fondo: #ffffff;/* Fondo Contenido Blanco */
+            --color-texto: #2c3e50;           /* Texto Principal Oscuro */
+            --color-texto-secundario: #7f8c8d; /* Texto Gris Claro */
+            --color-borde: #bdc3c7;           /* Borde Gris Claro */
+            --color-codigo-fondo: #ecf0f1;   /* Fondo Código Gris Claro */
+            --sombra-suave: 0 4px 8px rgba(0,0,0,0.08);
+            --radio-borde: 6px;
+            --fuente-principal: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            --fuente-codigo: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            --fuente-matematica: 'Cambria Math', 'Latin Modern Math', 'TeX Gyre Pagella Math', serif;
+        }
+
+        /* --- Estilos Generales --- */
+        body {
+            font-family: var(--fuente-principal);
+            line-height: 1.7;
+            color: var(--color-texto);
+            background-color: var(--color-fondo);
+            margin: 0;
+            padding: 0;
+            font-size: 16px; /* Base para rem/em */
+        }
+
+        .contenedor {
+            max-width: 960px;
+            margin: 30px auto;
+            padding: 30px 40px;
+            background-color: var(--color-contenido-fondo);
+            box-shadow: var(--sombra-suave);
+            border-radius: var(--radio-borde);
+            border-top: 5px solid var(--color-primario);
+        }
+
+        /* --- Encabezados --- */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--color-borde);
+        }
+
+        h1 {
+            color: var(--color-primario);
+            margin-bottom: 5px;
+            font-size: 2.6rem;
+            font-weight: 600;
+        }
+        header p {
+            color: var(--color-texto-secundario);
+            font-size: 1.1rem;
+            margin-top: 0;
+        }
+
+        h2 {
+            color: var(--color-secundario);
+            border-bottom: 3px solid var(--color-primario);
+            padding-bottom: 10px;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: var(--color-primario);
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+         h4 {
+            color: var(--color-secundario);
+            margin-top: 30px;
+             margin-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* --- Navegación / TOC --- */
+        nav {
+            background-color: #e8f4f8;
+            padding: 15px 20px;
+            border-radius: var(--radio-borde);
+            margin-bottom: 30px;
+            border: 1px solid var(--color-borde);
+        }
+        nav h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: var(--color-secundario);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap; /* Para que quepa en pantallas pequeñas */
+        }
+        nav li {
+            margin-right: 15px;
+            margin-bottom: 5px;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--color-primario);
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        nav a:hover, nav a:focus {
+            color: var(--color-acento);
+            text-decoration: underline;
+        }
+
+        /* --- Elementos de Contenido --- */
+        p {
+            margin-bottom: 1rem;
+        }
+        strong { color: var(--color-secundario); font-weight: 600; }
+        em { font-style: italic; color: #555; } /* Sutil énfasis */
+
+        /* Bloques Destacados */
+        .bloque-destacado {
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left-width: 5px;
+            border-left-style: solid;
+            border-radius: 0 var(--radio-borde) var(--radio-borde) 0;
+        }
+        .nota {
+            background-color: #fffbeb;
+            border-color: var(--color-amarillo);
+        }
+        .ejemplo {
+            background-color: #e8f8f5;
+            border-color: var(--color-verde);
+        }
+        .importante, .teorema { /* Combinado estilo para teorema */
+            background-color: #fdedec;
+            border-color: var(--color-rojo);
+            font-weight: 500;
+        }
+         .definicion {
+            background-color: #eaf2f8;
+            border-color: var(--color-primario);
+        }
+        .bloque-destacado p:last-child { margin-bottom: 0; }
+        .bloque-destacado strong { color: inherit; } /* Heredar color base del bloque */
+
+        /* Listas */
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        ul ul, ol ol, ul ol, ol ul { margin-top: 0.5rem; }
+
+        /* Código y Fórmulas */
+         code { /* Estilo para código inline */
+            background-color: var(--color-codigo-fondo);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: var(--fuente-codigo);
+            font-size: 0.9em;
+            color: var(--color-acento); /* Diferencia del texto normal */
+        }
+        pre {
+            background-color: var(--color-codigo-fondo);
+            border: 1px solid var(--color-borde);
+            border-radius: var(--radio-borde);
+            padding: 1rem;
+            overflow-x: auto; /* Scroll si es necesario */
+            font-family: var(--fuente-codigo);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 1.5rem 0;
+        }
+        pre code { /* Reset para código dentro de pre */
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit; /* Heredar tamaño de pre */
+            color: inherit; /* Heredar color de pre */
+        }
+
+        .matematica, .formula { /* Estilo unificado para notación */
+            font-family: var(--fuente-matematica);
+            font-size: 1.1em;
+            text-align: center;
+            margin: 1.8rem auto;
+            padding: 1rem 1.5rem;
+            background-color: #f8f9fa;
+            border: 1px solid var(--color-borde);
+            border-radius: var(--radio-borde);
+            display: block;
+            max-width: 85%;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .matematica strong, .formula strong { /* Resaltar nombres/símbolos clave */
+             color: var(--color-secundario);
+             font-weight: 600;
+        }
+        .math-inline { /* Para símbolos matemáticos en línea */
+             font-family: var(--fuente-matematica);
+             /* font-style: italic; */ /* Opcional */
+        }
+
+        /* Gráficos / Diagramas */
+        .grafico {
+            background-color: var(--color-contenido-fondo);
+            border: 1px solid var(--color-borde);
+            border-radius: var(--radio-borde);
+            box-shadow: var(--sombra-suave);
+            padding: 25px;
+            margin: 2.5rem auto;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .grafico svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 15px auto;
+        }
+        .grafico-titulo {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--color-secundario);
+            font-size: 1.1rem;
+        }
+        .grafico-descripcion {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: var(--color-texto-secundario);
+        }
+
+        /* --- Pie de página --- */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid var(--color-borde);
+            font-size: 0.9rem;
+            color: var(--color-texto-secundario);
+        }
+        footer p { margin-bottom: 0.3rem; }
+
+        /* --- Utilidades --- */
+        .text-center { text-align: center; }
+
+        /* --- Media Queries (Ejemplo básico) --- */
+        @media (max-width: 768px) {
+            .contenedor {
+                margin: 15px;
+                padding: 20px;
+            }
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.7rem; }
+            h3 { font-size: 1.4rem; }
+            nav ul { flex-direction: column; } /* TOC vertical */
+            nav li { margin-right: 0; margin-bottom: 8px; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <header>
+            <h1>Teoría de Autómatas, Gramáticas y Lenguajes</h1>
+            <p>Una guía esencial y mejorada para los fundamentos de la computación teórica</p>
+        </header>
+
+        <nav aria-label="Tabla de contenidos">
+            <h3>Navegación Rápida</h3>
+            <ul>
+                <li><a href="#introduccion">1. Introducción</a></li>
+                <li><a href="#conceptos-previos">2. Conceptos Fundamentales</a></li>
+                <li><a href="#automatas-finitos">3. Autómatas Finitos</a></li>
+                <li><a href="#gramaticas-regulares">4. Gramáticas Regulares</a></li>
+                <li><a href="#expresiones-regulares">5. Expresiones Regulares</a></li>
+                <li><a href="#automatas-pila">6. Autómatas a Pila (LIC)</a></li>
+                <li><a href="#maquinas-turing">7. Máquinas de Turing (RE)</a></li>
+                <li><a href="#propiedades-lenguajes">8. Propiedades y Verificación</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="introduccion">
+                <h2>1. Introducción a la Teoría de Autómatas 🤖</h2>
+                <p>Bienvenido/a al fascinante mundo de la <strong>teoría de autómatas</strong> y <strong>lenguajes formales</strong>, una de las piedras angulares de las Ciencias de la Computación.</p>
+
+                <div class="definicion">
+                    <p><strong>Teoría de Autómatas:</strong> Rama de la ciencia de la computación teórica que estudia máquinas abstractas (autómatas) y los problemas computacionales que pueden resolver. Se centra en definir modelos de cómputo, estudiar sus capacidades y limitaciones.</p>
+                </div>
+
+                <div class="nota">
+                    <p><strong>Idea Central:</strong> Esta área estudia los <strong>límites fundamentales de la computación</strong> y sirve como base teórica para el diseño de compiladores, particularmente en las fases de análisis léxico y sintáctico.</p>
+                </div>
+
+                <p>En este recorrido, exploraremos las <strong>máquinas de estado</strong> (autómatas) y los <strong>lenguajes formales</strong> que pueden reconocer, desde los más simples (lenguajes regulares) hasta los más generales (lenguajes recursivamente enumerables).</p>
+
+                <h3>¿Por qué es importante esta teoría?</h3>
+                <ul>
+                    <li><strong>Define límites computacionales:</strong> Nos ayuda a entender qué problemas pueden ser resueltos algorítmicamente y qué complejidad tienen diferentes clases de problemas.</li>
+                    <li><strong>Base de los compiladores:</strong> El <em>análisis léxico</em> (identificar tokens como palabras clave, identificadores) utiliza <strong>Autómatas Finitos</strong>. El <em>análisis sintáctico</em> (verificar la estructura gramatical del código) utiliza <strong>Autómatas a Pila</strong> y <strong>Gramáticas Independientes del Contexto</strong>.</li>
+                    <li><strong>Modelado:</strong> Proporciona modelos matemáticos precisos para describir y analizar sistemas (hardware, software, protocolos).</li>
+                    <li><strong>Verificación formal:</strong> Permite verificar formalmente si un sistema cumple ciertas propiedades.</li>
+                </ul>
+            </section>
+
+            <section id="conceptos-previos">
+                <h2>2. Conceptos Fundamentales: El ABC de la Teoría 🧩</h2>
+
+                <h3>Teoría de Conjuntos (Repaso Rápido)</h3>
+                <p>La teoría de autómatas se basa fuertemente en la teoría de conjuntos. Aquí un breve recordatorio:</p>
+
+                <div class="ejemplo">
+                    <p><strong>Conjunto:</strong> Colección de objetos distintos (elementos). Notación: <code>{1, 2, 3}</code></p>
+                    <p><strong>Cardinalidad:</strong> <code>|A|</code> - Número de elementos.</p>
+                    <p><strong>Conjunto Vacío:</strong> <code>Ø</code> o <code>{}</code>.</p>
+                    <p><strong>Pertenencia:</strong> <code>a ∈ A</code> (a es elemento de A).</p>
+                    <p><strong>Subconjunto:</strong> <code>A ⊆ B</code> (Todo elemento de A está en B).</p>
+                    <p><strong>Unión:</strong> <code>A ∪ B</code> (Elementos en A o en B).</p>
+                    <p><strong>Intersección:</strong> <code>A ∩ B</code> (Elementos en A y en B).</p>
+                    <p><strong>Diferencia:</strong> <code>A - B</code> (Elementos en A pero no en B).</p>
+                    <p><strong>Producto Cartesiano:</strong> <code>A × B = {(a, b) | a ∈ A, b ∈ B}</code> (Pares ordenados).</p>
+                    <p><strong>Conjunto Potencia:</strong> <code>P(A)</code> o <code>2ᴬ</code> (Conjunto de todos los subconjuntos de A).</p>
+                </div>
+
+                <h3>Alfabetos, Cadenas y Lenguajes</h3>
+
+                <div class="definicion">
+                    <p><strong>Alfabeto (Σ):</strong> Un conjunto finito y no vacío de símbolos. Es la base sobre la cual se construyen las cadenas.</p>
+                    <p>Ejemplos: <code>Σ = {0, 1}</code> (alfabeto binario), <code>Σ = {a, b, c}</code> (alfabeto de letras minúsculas).</p>
+                </div>
+
+                <p>A partir de un alfabeto Σ:</p>
+                <ul>
+                    <li><strong>Cadena (o Palabra):</strong> Una secuencia finita de símbolos de Σ. Ej: <code>0110</code>, <code>aba</code>.</li>
+                    <li><strong>Cadena Vacía (ε o λ):</strong> La cadena sin símbolos. Tiene longitud 0. Es única.</li>
+                    <li><strong>Longitud (|w|):</strong> Número de símbolos en la cadena <code>w</code>. <code>|aba| = 3</code>, <code>|ε| = 0</code>.</li>
+                    <li><strong>Concatenación (wv):</strong> Yuxtaponer dos cadenas. Ej: si <code>w = ab</code>, <code>v = ba</code>, entonces <code>wv = abba</code>. La cadena vacía es el elemento neutro: <code>wε = εw = w</code>.</li>
+                    <li><strong>Potencia de un alfabeto (Σᵏ):</strong> El conjunto de todas las cadenas de longitud <code>k</code> sobre Σ.
+                        <ul>
+                            <li><code>Σ⁰ = {ε}</code></li>
+                            <li><code>Σ¹ = Σ</code></li>
+                            <li><code>Σ² = {xy | x ∈ Σ, y ∈ Σ}</code></li>
+                        </ul>
+                    </li>
+                    <li><strong>Clausura de Kleene (Σ*):</strong> El conjunto de <em>todas</em> las cadenas de longitud finita (incluyendo ε) sobre Σ.
+                        <p class="matematica math-inline">Σ* = Σ⁰ ∪ Σ¹ ∪ Σ² ∪ ... = ⋃<sub>k≥0</sub> Σᵏ</p>
+                    </li>
+                    <li><strong>Clausura Positiva (Σ⁺):</strong> El conjunto de todas las cadenas de longitud > 0.
+                         <p class="matematica math-inline">Σ⁺ = Σ¹ ∪ Σ² ∪ ... = Σ* - {ε}</p>
+                    </li>
+                </ul>
+
+                <div class="grafico">
+                    <!-- SVG de la Figura 1 (Potencias de un Alfabeto) iría aquí -->
+                     <div class="grafico-titulo">Visual 1: Potencias de un Alfabeto</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 250" width="600" height="250">
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                            </marker>
+                        </defs>
+                        <circle cx="100" cy="125" r="40" fill="#eaf2f8" stroke="#3498db" stroke-width="2"/>
+                        <circle cx="220" cy="125" r="50" fill="#eaf2f8" stroke="#3498db" stroke-width="2"/>
+                        <circle cx="360" cy="125" r="60" fill="#eaf2f8" stroke="#3498db" stroke-width="2"/>
+                        <ellipse cx="520" cy="125" rx="70" ry="100" fill="#d6eaf8" stroke="#2980b9" stroke-width="2" stroke-dasharray="5,3"/>
+                        <text x="100" y="125" text-anchor="middle" font-size="16" font-weight="bold">Σ⁰ = {ε}</text>
+                        <text x="100" y="145" text-anchor="middle" font-size="12">Cadena vacía</text>
+                        <text x="220" y="125" text-anchor="middle" font-size="16" font-weight="bold">Σ¹</text>
+                        <text x="220" y="145" text-anchor="middle" font-size="12">Símbolos individuales</text>
+                        <text x="220" y="165" text-anchor="middle" font-size="12">Ej: {0, 1}</text>
+                        <text x="360" y="125" text-anchor="middle" font-size="16" font-weight="bold">Σ²</text>
+                        <text x="360" y="145" text-anchor="middle" font-size="12">Cadenas de longitud 2</text>
+                        <text x="360" y="165" text-anchor="middle" font-size="12">Ej: {00, 01, 10, 11}</text>
+                        <text x="520" y="85" text-anchor="middle" font-size="18" font-weight="bold">Σ*</text>
+                        <text x="520" y="115" text-anchor="middle" font-size="14">Clausura de Kleene</text>
+                        <text x="520" y="135" text-anchor="middle" font-size="12">Todas las cadenas</text>
+                        <text x="520" y="155" text-anchor="middle" font-size="12">incluyendo ε</text>
+                        <text x="520" y="175" text-anchor="middle" font-size="12">Σ* = Σ⁰ ∪ Σ¹ ∪ ...</text>
+                        <line x1="142" y1="125" x2="168" y2="125" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+                        <line x1="272" y1="125" x2="298" y2="125" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+                        <line x1="422" y1="125" x2="448" y2="125" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+                    </svg>
+                    <div class="grafico-descripcion">Figura 1: Relación entre las diferentes potencias de un alfabeto Σ</div>
+                </div>
+
+                <div class="definicion">
+                    <p><strong>Lenguaje Formal (L):</strong> Un lenguaje sobre un alfabeto Σ es <em>cualquier</em> subconjunto de Σ*. Es decir, <code>L ⊆ Σ*</code>.</p>
+                </div>
+
+                <h4>Operaciones entre Lenguajes</h4>
+                <p>Dado que los lenguajes son conjuntos, podemos aplicar operaciones de conjuntos, y también operaciones específicas de lenguajes:</p>
+                <div class="ejemplo">
+                    <p>Si L = {a, ab} y M = {b, ba}:</p>
+                    <p><strong>Unión:</strong> <code>L ∪ M = {a, ab, b, ba}</code></p>
+                    <p><strong>Concatenación:</strong> <code>LM = {w v | w ∈ L, v ∈ M} = {ab, aba, abb, abba}</code></p>
+                    <p><strong>Clausura de Kleene (L*):</strong> Cero o más concatenaciones de cadenas de L. <code>L* = {ε, a, ab, aa, aab, aba, abab, ...}</code></p>
+                    <p><strong>Complemento (L̄):</strong> <code>L̄ = Σ* - L</code>. Todas las cadenas que no están en L.</p>
+                </div>
+
+                <div class="importante">
+                    <p><strong>Problema Fundamental de Reconocimiento:</strong> Dado un lenguaje L y una cadena w, ¿pertenece w a L? (¿w ∈ L?)</p>
+                </div>
+            </section>
+
+            <!-- Las siguientes secciones seguirían la misma estructura mejorada -->
+            <section id="automatas-finitos">
+                <h2>3. Autómatas Finitos: Las Máquinas más Simples 🔄</h2>
+                <p>Los <strong>Autómatas Finitos (AF)</strong> son el modelo más simple de computación. Tienen una memoria muy limitada (solo recuerdan el estado actual) pero son fundamentales.</p>
+                 <div class="definicion">
+                    <p><strong>Autómata Finito:</strong> Modelo matemático de una máquina abstracta que acepta o rechaza cadenas de símbolos. Posee un conjunto finito de estados y transiciones entre ellos basadas en los símbolos de entrada.</p>
+                </div>
+                 <div class="grafico">
+                    <!-- SVG de la Figura 2 (Componentes AFD) iría aquí -->
+                     <div class="grafico-titulo">Visual 2: Componentes de un Autómata Finito</div>
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" width="600" height="300">
+                         <!-- Reutilizando el SVG anterior para coherencia -->
+                         <defs>
+                             <marker id="arrowhead-afd" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                 <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                             </marker>
+                         </defs>
+                         <circle cx="150" cy="100" r="40" fill="white" stroke="#3498db" stroke-width="3"/>
+                         <text x="150" y="105" text-anchor="middle" font-size="18" font-weight="bold">q₀</text>
+                         <text x="150" y="125" text-anchor="middle" font-size="14" fill="#555">Estado Inicial</text>
+                         <circle cx="300" cy="100" r="40" fill="white" stroke="#3498db" stroke-width="3"/>
+                         <text x="300" y="105" text-anchor="middle" font-size="18" font-weight="bold">q₁</text>
+                         <circle cx="450" cy="100" r="40" fill="white" stroke="#3498db" stroke-width="3"/>
+                         <circle cx="450" cy="100" r="35" fill="none" stroke="#3498db" stroke-width="3"/>
+                         <text x="450" y="105" text-anchor="middle" font-size="18" font-weight="bold">q₂</text>
+                         <text x="450" y="125" text-anchor="middle" font-size="14" fill="#555">Estado Final</text>
+                         <path d="M 190 100 L 260 100" fill="none" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead-afd)"/>
+                         <text x="225" y="90" text-anchor="middle" font-size="16" fill="#27ae60" font-weight="bold">0</text>
+                         <path d="M 340 100 L 410 100" fill="none" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead-afd)"/>
+                         <text x="375" y="90" text-anchor="middle" font-size="16" fill="#27ae60" font-weight="bold">1</text>
+                         <path d="M 150 60 C 150 20 300 20 300 60" fill="none" stroke="#e67e22" stroke-width="2" marker-end="url(#arrowhead-afd)"/>
+                         <text x="225" y="30" text-anchor="middle" font-size="16" fill="#e67e22" font-weight="bold">1</text>
+                         <path d="M 300 140 C 300 180 450 180 450 140" fill="none" stroke="#e67e22" stroke-width="2" marker-end="url(#arrowhead-afd)"/>
+                         <text x="375" y="170" text-anchor="middle" font-size="16" fill="#e67e22" font-weight="bold">0</text>
+                         <path d="M 90 100 L 110 100" fill="none" stroke="#333" stroke-width="2" marker-end="url(#arrowhead-afd)"/>
+                         <text x="300" y="220" text-anchor="middle" font-size="18" font-weight="bold">Componentes:</text>
+                         <text x="130" y="250" text-anchor="start" font-size="16"> • Q = {q₀, q₁, q₂} (Estados)</text>
+                         <text x="130" y="275" text-anchor="start" font-size="16"> • Σ = {0, 1} (Alfabeto)</text>
+                         <text x="350" y="250" text-anchor="start" font-size="16"> • q₀ (Estado inicial)</text>
+                         <text x="350" y="275" text-anchor="start" font-size="16"> • F = {q₂} (Estados finales)</text>
+                     </svg>
+                    <div class="grafico-descripcion">Figura 2: Este autómata acepta cadenas binarias que terminan en "01".</div>
+                </div>
+
+                 <h3>Autómata Finito Determinista (AFD)</h3>
+                 <div class="definicion">
+                     <p>Un <strong>AFD</strong> es una 5-tupla <code class="math-inline">M = (Q, Σ, δ, q₀, F)</code> donde:</p>
+                     <ul>
+                         <li><code>Q</code>: conjunto finito de <strong>estados</strong>.</li>
+                         <li><code>Σ</code>: <strong>alfabeto</strong> de entrada finito.</li>
+                         <li><code>δ</code>: <strong>función de transición</strong> (<code class="math-inline">δ: Q × Σ → Q</code>), que para cada estado y símbolo de entrada, especifica <em>exactamente un</em> estado siguiente.</li>
+                         <li><code>q₀</code>: <strong>estado inicial</strong> (<code>q₀ ∈ Q</code>).</li>
+                         <li><code>F</code>: conjunto de <strong>estados finales</strong> o de aceptación (<code>F ⊆ Q</code>).</li>
+                     </ul>
+                 </div>
+                 <p>La característica clave es el <strong>determinismo</strong>: la función <code>δ</code> siempre indica un único camino a seguir.</p>
+                 <div class="nota">
+                    <p><strong>Aceptación en AFD:</strong> Una cadena <code>w</code> es aceptada si, comenzando en <code>q₀</code> y aplicando <code>δ</code> para cada símbolo de <code>w</code>, el estado final alcanzado pertenece a <code>F</code>.</p>
+                    <p>El conjunto de todas las cadenas aceptadas por un AFD M es el <strong>lenguaje aceptado</strong> por M, denotado como <code class="math-inline">L(M)</code>.</p>
+                 </div>
+                 <div class="teorema">
+                    <p><strong>Lenguajes Regulares:</strong> La clase de lenguajes aceptados por los AFD se denomina <strong>Lenguajes Regulares</strong>.</p>
+                 </div>
+
+                 <h3>Autómata Finito No Determinista (AFN)</h3>
+                 <div class="definicion">
+                     <p>Un <strong>AFN</strong> relaja las restricciones del AFD:</p>
+                      <ul>
+                         <li>La función de transición <code class="math-inline">δ: Q × (Σ ∪ {ε}) → P(Q)</code> devuelve un <em>conjunto</em> de posibles estados siguientes.</li>
+                         <li>Puede haber <strong>múltiples transiciones</strong> para el mismo estado y símbolo.</li>
+                         <li>Puede haber <strong>cero transiciones</strong> para un estado y símbolo.</li>
+                         <li>Permite <strong>ε-transiciones</strong>: cambios de estado sin consumir un símbolo de entrada.</li>
+                     </ul>
+                 </div>
+                 <div class="nota">
+                    <p><strong>Aceptación en AFN:</strong> Una cadena <code>w</code> es aceptada si existe <em>al menos un</em> camino de transiciones posible (incluyendo ε-transiciones) que, partiendo de <code>q₀</code> y consumiendo <code>w</code>, termine en un estado de <code>F</code>.</p>
+                 </div>
+
+                 <div class="teorema">
+                    <p><strong>Equivalencia AFD ⟺ AFN:</strong> Para cada AFN, existe un AFD que acepta el mismo lenguaje (construcción de subconjuntos). Para cada AFD, existe un AFN equivalente (el propio AFD).</p>
+                    <p><strong>Consecuencia:</strong> El no determinismo (y las ε-transiciones) <em>no</em> incrementan el poder computacional de los autómatas finitos. Ambas variantes reconocen exactamente la misma clase de lenguajes: los <strong>Lenguajes Regulares</strong>.</p>
+                </div>
+            </section>
+
+            <section id="gramaticas-regulares">
+                <h2>4. Gramáticas Regulares: Generando Lenguajes Regulares 📝</h2>
+                 <div class="definicion">
+                    <p>Una <strong>Gramática Formal</strong> es un sistema <code class="math-inline">G = (V, T, S, P)</code> para generar cadenas:</p>
+                    <ul>
+                        <li><code>V</code>: Variables (No Terminales).</li>
+                        <li><code>T</code>: Terminales (Alfabeto del lenguaje, <code>T = Σ</code>).</li>
+                        <li><code>S</code>: Símbolo Inicial (<code>S ∈ V</code>).</li>
+                        <li><code>P</code>: Reglas de Producción (<code>α → β</code>).</li>
+                    </ul>
+                    <p>El <strong>Lenguaje Generado</strong> <code class="math-inline">L(G) = {w ∈ T* | S ⇒* w}</code> son todas las cadenas terminales derivables desde S.</p>
+                 </div>
+                 <div class="definicion">
+                    <p>Una <strong>Gramática Regular (GR)</strong> es una gramática donde todas las producciones P tienen una de las siguientes formas (para gramática lineal derecha):</p>
+                    <ul>
+                        <li><code>A → aB</code> (donde <code>A, B ∈ V</code>, <code>a ∈ T</code>)</li>
+                        <li><code>A → a</code></li>
+                        <li><code>A → ε</code> (opcional, si el lenguaje incluye la cadena vacía)</li>
+                    </ul>
+                     <p>(Existe una forma equivalente llamada lineal izquierda: <code>A → Ba</code> o <code>A → a</code>).</p>
+                 </div>
+                 <div class="teorema">
+                     <p><strong>Equivalencia AF ⟺ GR:</strong> Un lenguaje es <strong>Regular</strong> si y solo si puede ser generado por una Gramática Regular.</p>
+                     <ul>
+                         <li>Se puede construir un AF(N) a partir de una GR.</li>
+                         <li>Se puede construir una GR a partir de un AF(D).</li>
+                     </ul>
+                 </div>
+                 <div class="ejemplo">
+                    <p>Gramática regular para <code>a*b</code>:</p>
+                    <pre><code>S → aS | b</code></pre>
+                    <p>Gramática regular para <code>(0+1)*0</code>:</p>
+                    <pre><code>S → 0S | 1S | 0</code></pre>
+                 </div>
+            </section>
+
+             <section id="expresiones-regulares">
+                <h2>5. Expresiones Regulares: Notación Concisa 🔍</h2>
+                 <div class="definicion">
+                    <p>Una <strong>Expresión Regular (ER)</strong> es una cadena de caracteres que define un patrón de búsqueda, o equivalentemente, describe un Lenguaje Regular.</p>
+                    <p>Definición inductiva:</p>
+                    <ul>
+                        <li><strong>Base:</strong> <code>a</code> (para <code>a ∈ Σ</code>), <code>ε</code>, <code>∅</code> son ERs.</li>
+                        <li><strong>Inducción:</strong> Si R y S son ERs, entonces también lo son:
+                            <ul>
+                                <li><code>(R + S)</code> o <code>(R | S)</code> : Unión (Alternancia)</li>
+                                <li><code>(RS)</code> : Concatenación</li>
+                                <li><code>(R*)</code> : Clausura de Kleene (Cero o más repeticiones)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p><strong>Precedencia:</strong> <code>*</code> (más alta) > concatenación > <code>+</code> (más baja). Usar paréntesis para agrupar.</p>
+                 </div>
+                 <div class="teorema">
+                    <p><strong>Teorema de Kleene:</strong> Un lenguaje es <strong>Regular</strong> si y solo si puede ser descrito por una Expresión Regular.</p>
+                    <p>Esto establece la triple equivalencia: <strong>AFD ⟺ AFN ⟺ GR ⟺ ER</strong>. Todos definen la misma clase de lenguajes: los Regulares.</p>
+                 </div>
+                  <div class="grafico">
+                    <!-- SVG de la Figura 3 (Operadores ER) iría aquí -->
+                     <div class="grafico-titulo">Visual 3: Operadores Básicos de Expresiones Regulares</div>
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="600" height="350">
+                         <defs>
+                            <marker id="arrowhead-er" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                            </marker>
+                         </defs>
+                         <rect x="50" y="50" width="200" height="100" rx="10" fill="#eaf2f8" stroke="#3498db" stroke-width="2"/>
+                         <text x="150" y="85" text-anchor="middle" font-size="18" font-weight="bold">R + S</text>
+                         <text x="150" y="110" text-anchor="middle" font-size="14">(Unión)</text>
+                         <text x="150" y="135" text-anchor="middle" font-size="14">L(R) ∪ L(S)</text>
+                         <rect x="350" y="50" width="200" height="100" rx="10" fill="#eaf2f8" stroke="#3498db" stroke-width="2"/>
+                         <text x="450" y="85" text-anchor="middle" font-size="18" font-weight="bold">RS</text>
+                         <text x="450" y="110" text-anchor="middle" font-size="14">(Concatenación)</text>
+                         <text x="450" y="135" text-anchor="middle" font-size="14">L(R)L(S)</text>
+                         <rect x="50" y="200" width="200" height="100" rx="10" fill="#eaf2f8" stroke="#3498db" stroke-width="2"/>
+                         <text x="150" y="235" text-anchor="middle" font-size="18" font-weight="bold">R*</text>
+                         <text x="150" y="260" text-anchor="middle" font-size="14">(Clausura Kleene)</text>
+                         <text x="150" y="285" text-anchor="middle" font-size="14">L(R)*</text>
+                         <rect x="350" y="200" width="200" height="100" rx="10" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+                         <text x="450" y="225" text-anchor="middle" font-size="18" font-weight="bold">Precedencia:</text>
+                         <text x="450" y="255" text-anchor="middle" font-size="16">1. *</text>
+                         <text x="450" y="280" text-anchor="middle" font-size="16">2. · (implícita)</text>
+                         <text x="450" y="305" text-anchor="middle" font-size="16">3. +</text>
+                     </svg>
+                    <div class="grafico-descripcion">Figura 3: Operadores básicos de expresiones regulares y su precedencia</div>
+                </div>
+            </section>
+
+            <section id="automatas-pila">
+                 <h2>6. Autómatas a Pila y Lenguajes Ind. del Contexto 📚</h2>
+                 <p>Para reconocer lenguajes más complejos que los regulares (como los que requieren contar o emparejar símbolos anidados), necesitamos más memoria. Los <strong>Autómatas a Pila (AP)</strong> añaden una pila (LIFO) a un autómata finito.</p>
+                 <div class="definicion">
+                     <p>Un <strong>Autómata a Pila (AP)</strong> es una 7-tupla <code class="math-inline">M = (Q, Σ, Γ, δ, q₀, Z₀, F)</code>:</p>
+                     <ul>
+                         <li><code>Q, Σ, q₀, F</code>: Como en los AF.</li>
+                         <li><code>Γ</code>: Alfabeto finito de la <strong>pila</strong>.</li>
+                         <li><code>Z₀</code>: Símbolo <strong>inicial de la pila</strong> (<code>Z₀ ∈ Γ</code>).</li>
+                         <li><code>δ</code>: Función de transición: <code class="math-inline">δ: Q × (Σ ∪ {ε}) × Γ → P<sub>finita</sub>(Q × Γ*)</code>.
+                         <br>Toma (estado actual, símbolo entrada/ε, símbolo cima pila) y devuelve un conjunto finito de pares (nuevo estado, cadena a empujar en la pila).</li>
+                     </ul>
+                     <p>La cadena en <code>Γ*</code> se empuja símbolo a símbolo (el de más a la izquierda queda en la cima). Si es <code>ε</code>, solo se desapila.</p>
+                 </div>
+                 <div class="nota">
+                    <p><strong>Aceptación en AP:</strong> Puede ser por <strong>Estado Final</strong> (llegar a un estado en F, contenido de la pila irrelevante) o por <strong>Pila Vacía</strong> (vaciar la pila, estado final irrelevante). Ambos modos son equivalentes en poder.</p>
+                 </div>
+                  <div class="grafico">
+                    <!-- SVG de la Figura 4 (AP) iría aquí -->
+                     <div class="grafico-titulo">Visual 4: Funcionamiento de un Autómata a Pila</div>
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="600" height="320">
+                         <!-- Reutilizando el SVG anterior -->
+                          <defs>
+                             <marker id="arrowhead-ap" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                 <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                             </marker>
+                          </defs>
+                         <rect x="50" y="70" width="120" height="180" rx="10" fill="#eaf2f8" stroke="#3498db" stroke-width="2"/>
+                         <text x="110" y="40" text-anchor="middle" font-size="16" font-weight="bold">Control Finito</text>
+                         <circle cx="110" cy="115" r="25" fill="white" stroke="#3498db" stroke-width="2"/>
+                         <text x="110" y="120" text-anchor="middle" font-size="16" font-weight="bold">q₀</text>
+                         <circle cx="110" cy="190" r="25" fill="white" stroke="#3498db" stroke-width="2"/>
+                         <text x="110" y="195" text-anchor="middle" font-size="16" font-weight="bold">q₁</text>
+                         <path d="M 110 140 L 110 165" fill="none" stroke="#3498db" stroke-width="2" marker-end="url(#arrowhead-ap)"/>
+                         <rect x="200" y="70" width="350" height="60" fill="white" stroke="#333" stroke-width="2"/>
+                         <line x1="250" y1="70" x2="250" y2="130" stroke="#333" stroke-width="1"/>
+                         <line x1="300" y1="70" x2="300" y2="130" stroke="#333" stroke-width="1"/>
+                         <line x1="350" y1="70" x2="350" y2="130" stroke="#333" stroke-width="1"/>
+                         <line x1="400" y1="70" x2="400" y2="130" stroke="#333" stroke-width="1"/>
+                         <line x1="450" y1="70" x2="450" y2="130" stroke="#333" stroke-width="1"/>
+                         <text x="225" y="110" text-anchor="middle" font-size="20" font-weight="bold">a</text>
+                         <text x="275" y="110" text-anchor="middle" font-size="20" font-weight="bold">a</text>
+                         <text x="325" y="110" text-anchor="middle" font-size="20" font-weight="bold">b</text>
+                         <text x="375" y="110" text-anchor="middle" font-size="20" font-weight="bold">b</text>
+                         <text x="425" y="110" text-anchor="middle" font-size="20" font-weight="bold">a</text>
+                         <text x="475" y="110" text-anchor="middle" font-size="20" font-weight="bold">a</text>
+                         <polygon points="325,140 315,155 335,155" fill="#e74c3c" stroke="#333" stroke-width="1"/>
+                         <text x="325" y="170" text-anchor="middle" font-size="14">Cabezal</text>
+                         <rect x="250" y="190" width="60" height="120" fill="white" stroke="#333" stroke-width="2"/>
+                         <rect x="250" y="250" width="60" height="30" fill="#d6eaf8" stroke="#3498db" stroke-width="1"/>
+                         <text x="280" y="270" text-anchor="middle" font-size="16" font-weight="bold">Z₀</text>
+                         <rect x="250" y="220" width="60" height="30" fill="#d6eaf8" stroke="#3498db" stroke-width="1"/>
+                         <text x="280" y="240" text-anchor="middle" font-size="16" font-weight="bold">A</text>
+                         <rect x="250" y="190" width="60" height="30" fill="#d6eaf8" stroke="#3498db" stroke-width="1"/>
+                         <text x="280" y="210" text-anchor="middle" font-size="16" font-weight="bold">A</text>
+                          <text x="280" y="320" text-anchor="middle" font-size="16" font-weight="bold">PILA</text>
+                          <text x="375" y="40" text-anchor="middle" font-size="16" font-weight="bold">Cinta de Entrada</text>
+                     </svg>
+                    <div class="grafico-descripcion">Figura 4: Un autómata a pila (AP) con su control finito, cinta de entrada y pila.</div>
+                </div>
+                 <div class="definicion">
+                    <p>Una <strong>Gramática Independiente del Contexto (GIC)</strong> es una gramática <code class="math-inline">G = (V, T, S, P)</code> donde todas las producciones son de la forma:</p>
+                    <p class="matematica">A → α</p>
+                    <p>donde <code>A ∈ V</code> (un único no terminal) y <code>α ∈ (V ∪ T)*</code> (cualquier cadena de variables y/o terminales).</p>
+                 </div>
+                 <div class="teorema">
+                     <p><strong>Equivalencia AP ⟺ GIC:</strong> Un lenguaje es <strong>Independiente del Contexto (LIC)</strong> si y solo si es aceptado por un Autómata a Pila.</p>
+                     <p><strong>Relación con Regulares:</strong> Todo Lenguaje Regular es un LIC, pero existen LICs que no son regulares (ej: <code>{aⁿbⁿ | n ≥ 0}</code>).</p>
+                 </div>
+                 <h4>Autómatas a Pila Deterministas (APD)</h4>
+                 <p>Un APD es un AP donde, para cada configuración, existe <strong>a lo sumo una</strong> transición posible. Los APD son <strong>menos poderosos</strong> que los AP no deterministas.</p>
+                 <div class="definicion">
+                    <p>Los lenguajes aceptados por los APD se llaman <strong>Lenguajes Independientes del Contexto Deterministas (LICD)</strong>.</p>
+                    <p>Se cumple: <strong>Regulares ⊂ LICD ⊂ LIC</strong>.</p>
+                 </div>
+            </section>
+
+            <section id="maquinas-turing">
+                <h2>7. Máquinas de Turing: El Modelo Universal 🧠</h2>
+                <p>Las <strong>Máquinas de Turing (MT)</strong> son el modelo teórico que captura la noción intuitiva de "algoritmo" o "procedimiento efectivo". Son mucho más poderosas que los AF y los AP.</p>
+                <div class="definicion">
+                     <p>Una <strong>Máquina de Turing (MT)</strong> es una 7-tupla <code class="math-inline">M = (Q, Σ, Γ, δ, q₀, B, F)</code>:</p>
+                     <ul>
+                         <li><code>Q, Σ, q₀, F</code>: Como en AP.</li>
+                         <li><code>Γ</code>: Alfabeto finito de la <strong>cinta</strong> (<code>Σ ⊆ Γ</code>).</li>
+                         <li><code>B</code>: Símbolo <strong>blanco</strong> (<code>B ∈ Γ - Σ</code>), llena la cinta infinita.</li>
+                         <li><code>δ</code>: Función de transición: <code class="math-inline">δ: Q × Γ → Q × Γ × {L, R}</code> (para MT determinista).
+                         <br>Toma (estado actual, símbolo leído cinta) y devuelve (nuevo estado, símbolo a escribir, movimiento L/R).</li>
+                     </ul>
+                      <p>La cinta es infinita y la MT puede leer, escribir y moverse libremente por ella.</p>
+                 </div>
+                <div class="teorema">
+                    <p><strong>Tesis de Church-Turing:</strong> Cualquier función computable por un algoritmo puede ser computada por una Máquina de Turing.</p>
+                    <p>(Esta es una hipótesis fundamental, no un teorema matemático, pero ampliamente aceptada).</p>
+                </div>
+                <h4>Lenguajes y Computabilidad</h4>
+                <ul>
+                    <li><strong>Lenguajes Recursivamente Enumerables (RE) o Tipo 0:</strong> Lenguajes aceptados por una MT (la MT para y acepta si <code>w ∈ L</code>, pero puede no parar si <code>w ∉ L</code>).</li>
+                    <li><strong>Lenguajes Recursivos (R) o Decidibles:</strong> Lenguajes aceptados por una MT que <em>siempre para</em> (acepta o rechaza en tiempo finito).</li>
+                </ul>
+                <div class="importante">
+                    <p><strong>Relación:</strong> Recursivos ⊂ RE.</p>
+                    <p>Existen lenguajes RE que <strong>no son recursivos</strong>, como el <strong>Problema de la Parada</strong> (Halting Problem): determinar si una MT M parará sobre una entrada w.</p>
+                </div>
+                  <div class="grafico">
+                    <!-- SVG de la Figura 5 (Jerarquía Chomsky) iría aquí -->
+                     <div class="grafico-titulo">Visual 5: Jerarquía de Chomsky (Completa)</div>
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+                         <!-- Reutilizando SVG anterior -->
+                          <defs>
+                             <marker id="arrowhead-chomsky" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                 <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                             </marker>
+                          </defs>
+                         <ellipse cx="300" cy="200" rx="250" ry="180" fill="#ebf5fb" stroke="#2980b9" stroke-width="2"/>
+                         <ellipse cx="300" cy="200" rx="180" ry="130" fill="#d6eaf8" stroke="#2980b9" stroke-width="2"/>
+                         <ellipse cx="300" cy="200" rx="120" ry="85" fill="#aed6f1" stroke="#2980b9" stroke-width="2"/>
+                         <ellipse cx="300" cy="200" rx="70" ry="50" fill="#85c1e9" stroke="#2980b9" stroke-width="2"/>
+                         <text x="300" y="50" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Tipo 0: RE</text>
+                         <text x="300" y="75" text-anchor="middle" font-size="14" fill="#2c3e50">(Máquinas de Turing)</text>
+                         <text x="300" y="120" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Tipo 1: Sensibles Contexto</text>
+                         <text x="300" y="145" text-anchor="middle" font-size="14" fill="#2c3e50">(Autómatas Lin. Acotados)</text>
+                         <text x="300" y="200" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Tipo 2: Ind. Contexto (LIC)</text>
+                         <text x="300" y="225" text-anchor="middle" font-size="14" fill="#2c3e50">(Autómatas a Pila)</text>
+                         <text x="300" y="275" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">Tipo 3: Regulares</text>
+                         <text x="300" y="300" text-anchor="middle" font-size="14" fill="#2c3e50">(Autómatas Finitos)</text>
+                         <text x="100" y="350" text-anchor="middle" font-size="14" fill="#7f8c8d">Ej: a*b*</text>
+                         <text x="230" y="350" text-anchor="middle" font-size="14" fill="#7f8c8d">Ej: aⁿbⁿ</text>
+                         <text x="380" y="350" text-anchor="middle" font-size="14" fill="#7f8c8d">Ej: aⁿbⁿcⁿ</text>
+                         <text x="530" y="350" text-anchor="middle" font-size="14" fill="#7f8c8d">Ej: Halting Problem</text>
+                         <!-- Añadir óvalo para Recursivos -->
+                         <ellipse cx="300" cy="200" rx="215" ry="155" fill="none" stroke="#e67e22" stroke-width="2" stroke-dasharray="8,4"/>
+                         <text x="520" y="120" text-anchor="middle" font-size="14" fill="#e67e22" transform="rotate(15 520,120)">Recursivos</text>
+                     </svg>
+                    <div class="grafico-descripcion">Figura 5: La Jerarquía de Chomsky completa, incluyendo los lenguajes Recursivos.</div>
+                </div>
+            </section>
+
+            <section id="propiedades-lenguajes">
+                <h2>8. Propiedades y Verificación de Lenguajes 🔬</h2>
+                <p>Además de clasificar lenguajes, es crucial entender sus propiedades y cómo demostrar a qué clase pertenecen (o no).</p>
+
+                <h3>El Lema de Bombeo (Pumping Lemma)</h3>
+                <p>Esta es una técnica fundamental para demostrar que un lenguaje <strong>NO</strong> pertenece a una clase (típicamente, no es regular o no es independiente del contexto).</p>
+                <div class="teorema">
+                    <p><strong>Lema de Bombeo para Lenguajes Regulares:</strong></p>
+                    <p>Si L es regular, existe <span class="math-inline">n</span> tal que <span class="math-inline">∀w ∈ L, |w| ≥ n</span>, podemos escribir <span class="math-inline">w = xyz</span> con:</p>
+                    <ol>
+                        <li><span class="math-inline">|xy| ≤ n</span></li>
+                        <li><span class="math-inline">|y| > 0</span></li>
+                        <li><span class="math-inline">∀k ≥ 0, xy<sup>k</sup>z ∈ L</span></li>
+                    </ol>
+                    <p><em>Idea Intuitiva:</em> Si una cadena es suficientemente larga, el AFD debe haber pasado por un ciclo (<code>y</code>) al leerla, y ese ciclo puede repetirse (o eliminarse). Si al bombear la cadena sale del lenguaje, entonces L no era regular.</p>
+                </div>
+                 <div class="teorema">
+                    <p><strong>Lema de Bombeo para Lenguajes Independientes del Contexto:</strong></p>
+                    <p>Si L es LIC, existe <span class="math-inline">n</span> tal que <span class="math-inline">∀z ∈ L, |z| ≥ n</span>, podemos escribir <span class="math-inline">z = uvwxy</span> con:</p>
+                    <ol>
+                        <li><span class="math-inline">|vwx| ≤ n</span></li>
+                        <li><span class="math-inline">|vx| > 0</span> (al menos una parte a bombear no es vacía)</li>
+                        <li><span class="math-inline">∀i ≥ 0, uv<sup>i</sup>wx<sup>i</sup>y ∈ L</span></li>
+                    </ol>
+                     <p><em>Idea Intuitiva:</em> Si una derivación en GIC es suficientemente alta, debe haber un no terminal repetido en un camino del árbol de derivación. Las subcadenas generadas (<code>v</code> y <code>x</code>) pueden repetirse simultáneamente.</p>
+                </div>
+                 <div class="ejemplo">
+                    <p>Usar lema de bombeo (Regulares) para demostrar que L = {0<sup>n</sup>1<sup>n</sup> | n ≥ 0} no es regular (como visto antes).</p>
+                    <p>Usar lema de bombeo (LIC) para demostrar que L = {a<sup>n</sup>b<sup>n</sup>c<sup>n</sup> | n ≥ 0} no es LIC.</p>
+                </div>
+
+                <h3>Propiedades de Clausura (Resumen)</h3>
+                 <table>
+                     <thead>
+                         <tr>
+                             <th>Operación</th>
+                             <th>Regulares</th>
+                             <th>LICD</th>
+                             <th>LIC</th>
+                             <th>Recursivos</th>
+                             <th>RE</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <tr><td>Unión</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-rojo)">No</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td></tr>
+                         <tr><td>Concatenación</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td></tr>
+                         <tr><td>Estrella Kleene</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td></tr>
+                         <tr><td>Complemento</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-rojo)">No</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-rojo)">No</td></tr>
+                         <tr><td>Intersección</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-rojo)">No</td><td style="color:var(--color-rojo)">No</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td></tr>
+                         <tr><td>Intersección con Regular</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td><td style="color:var(--color-verde)">Sí</td></tr>
+                     </tbody>
+                 </table>
+                 <style> table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; } th, td { border: 1px solid var(--color-borde); padding: 8px 12px; text-align: center; } thead { background-color: var(--color-secundario); color: white; } tbody tr:nth-child(even) { background-color: var(--color-fondo); } </style>
+            </section>
+
+        </main>
+
+        <footer>
+            <p>Resumen Mejorado de "Introducción a la Teoría de Autómatas, Gramáticas y Lenguajes"</p>
+            <p>Adaptado de E. Gaudioso Vázquez y T. García Saiz</p>
+        </footer>
+    </div>
+</body>
+</html>
